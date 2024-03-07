@@ -1,0 +1,32 @@
+{
+  "name": "itsc4155_mdsp24_group11",
+  "version": "1.0.0",
+  "description": "Sweat rivals app, an app to help you and your friends get in shape with the help of some friendly competition!",
+  "main": "app.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cadenlalley/ITSC4155_MDSp24_Group11.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cadenlalley/ITSC4155_MDSp24_Group11/issues"
+  },
+  "homepage": "https://github.com/cadenlalley/ITSC4155_MDSp24_Group11#readme",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.3",
+    "luxon": "^3.4.4",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.2.1",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.1.0",
+    "uuid": "^9.0.1"
+  }
+}
