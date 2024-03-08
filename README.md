@@ -10,3 +10,7 @@
     * `git add .` to stage all edited files
     * `git push -u origin <branch>` to push staged files to the specified branch
     * `git pull` pull changes from current branch
+
+* Installation Instructions:
+    *  `npm install` run after cloning repository, to install dependencies
+    *  `nodemon app` to run the server
