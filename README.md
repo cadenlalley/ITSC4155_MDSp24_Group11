@@ -11,7 +11,7 @@
     * `git push -u origin <branch>` to push staged files to the specified branch
     * `git pull` pull changes from current branch
       
-* Prerequisites Install:
+* Prerequisites Installation Instructions:
    * [nodejs](https://nodejs.org/en/download) 
    * [nodemon](https://www.npmjs.com/package/nodemon)
 
