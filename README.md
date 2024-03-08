@@ -10,7 +10,11 @@
     * `git add .` to stage all edited files
     * `git push -u origin <branch>` to push staged files to the specified branch
     * `git pull` pull changes from current branch
+      
+* Prerequisites Install:
+   * [nodejs](https://nodejs.org/en/download) 
+   * [nodemon](https://www.npmjs.com/package/nodemon)
 
-* Installation Instructions:
+* Installation Instructions: 
     *  `npm install` run after cloning repository, to install dependencies
     *  `nodemon app` to run the server
