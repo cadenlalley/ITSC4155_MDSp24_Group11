@@ -1,5 +1,5 @@
 // Sample config.js file
 module.exports = {
-    mongoURI: '<mongoURI>',
+    mongoURI: 'mongodb+srv://georgeviveros38:<password>@sweatrivals.uosck8c.mongodb.net/',
 };
 

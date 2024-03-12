@@ -1,5 +1,5 @@
 
 
-app.get("/", (req, res) => {
+exports.index = (req, res) => {
     res.render("index");
-  });
+  };

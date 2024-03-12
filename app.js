@@ -1,6 +1,7 @@
 const express = require("express");
-const config = require("./config.js");
+const config = require("./config.sample.js");
 const mongoose = require("mongoose");
+const mainRoutes = require('./routes/mainRoutes');
 
 const uri = config.mongoURI;
 
