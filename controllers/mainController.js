@@ -1,5 +1,11 @@
+const model = require('../models/user');
 
-
+//renders the index.ejs file
 exports.index = (req, res) => {
-    res.render("index");
+    let id = req.session.user;
+    model.findById(id)
+    .then(user=>{
+      res.render("index");
+    })
+    
   };
