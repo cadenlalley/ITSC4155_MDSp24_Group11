@@ -12,16 +12,17 @@ const app = express();
 const uri = config.mongoURI;
 const host = "localhost";
 const port = 3000;
+
 app.set("view engine", "ejs");
 
 //connect to MongoDB
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(uri, {})
     .then(() => {
-        app.listen(port, host, ()=>{
-        console.log(`Server running at http://localhost:`, port);
+        app.listen(port, host, () => {
+            console.log(`Server running at http://localhost:`, port);
         });
     })
-    .catch(err=>console.log(err.message));
+    .catch(err => console.log(err.message));
 
 //mount middleware
 app.use(
@@ -29,10 +30,9 @@ app.use(
         secret: "ajfeirf90aeu9eroejfoefj",
         resave: false,
         saveUninitialized: false,
-        store: new MongoStore({mongoUrl: uri}),
-        cookie: {maxAge: 60*60*1000},
-        
-        })
+        store: new MongoStore({ mongoUrl: uri }),
+        cookie: { maxAge: 60 * 60 * 1000 },
+    })
 );
 
 app.use(express.static("public"));
