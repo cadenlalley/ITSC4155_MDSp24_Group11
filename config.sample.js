@@ -1,5 +1,5 @@
 // Sample config.js file
 module.exports = {
-    mongoURI: 'mongodb+srv://georgeviveros38:<password>@sweatrivals.uosck8c.mongodb.net/',
+    mongoURI: 'mongodb+srv://user:pass@sweatrivals.uosck8c.mongodb.net/?retryWrites=true&w=majority&appName=SweatRivals',
 };
 

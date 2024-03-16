@@ -1,6 +1,8 @@
 const express = require("express");
-const config = require("./config.sample.js");
+const config = require("./config.js");
 const mongoose = require("mongoose");
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const mainRoutes = require('./routes/mainRoutes');
 
 //create app
@@ -33,18 +35,15 @@ app.use(
         })
 );
 
-
-
-
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
 //set up connection to routes
 app.use('/', mainRoutes);
-
+/*
 //set up error responses
 app.use((req, res, next)=>{
-    let err = new Error('The server cannot locate '+ req.uri);
+    let err = new Error('The server cannot locate '+ req.url);
     err.status = 404;
     //next(err) calls the next error handler
     next(err);
@@ -59,4 +58,4 @@ app.use((err, req, res, next)=>{
 
     res.status(err.status);
     res.render('error', {error: err});
-});
+});*/
