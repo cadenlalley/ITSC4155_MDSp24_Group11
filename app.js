@@ -1,8 +1,10 @@
 const express = require("express");
-const config = require("./config.js");
 const mongoose = require("mongoose");
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const favicon = require('express-favicon');
+
+const config = require("./config.js");
 const mainRoutes = require('./routes/mainRoutes');
 
 //create app
@@ -37,6 +39,7 @@ app.use(
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(favicon('./public/logo.ico'));
 
 //set up connection to routes
 app.use('/', mainRoutes);
