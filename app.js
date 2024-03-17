@@ -6,6 +6,7 @@ const favicon = require('express-favicon');
 
 const config = require("./config.js");
 const mainRoutes = require('./routes/mainRoutes');
+const groupRoutes = require('./routes/groupRoutes');
 
 //create app
 const app = express();
@@ -43,6 +44,8 @@ app.use(favicon('./public/logo.ico'));
 
 //set up connection to routes
 app.use('/', mainRoutes);
+app.use('/groups', groupRoutes);
+
 /*
 //set up error responses
 app.use((req, res, next)=>{
