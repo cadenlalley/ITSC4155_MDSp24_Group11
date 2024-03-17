@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const favicon = require('express-favicon');
+const morgan = require('morgan');
 
 const config = require("./config.js");
 const mainRoutes = require('./routes/mainRoutes');
@@ -41,6 +42,7 @@ app.use(
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(favicon('./public/logo.ico'));
+app.use(morgan('tiny'));
 
 //set up connection to routes
 app.use('/', mainRoutes);
