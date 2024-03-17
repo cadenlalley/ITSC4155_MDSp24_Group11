@@ -1,8 +1,10 @@
 const express = require("express");
-const config = require("./config.js");
 const mongoose = require("mongoose");
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const favicon = require('express-favicon');
+
+const config = require("./config.js");
 const mainRoutes = require('./routes/mainRoutes');
 
 //create app
@@ -12,16 +14,17 @@ const app = express();
 const uri = config.mongoURI;
 const host = "localhost";
 const port = 3000;
+
 app.set("view engine", "ejs");
 
 //connect to MongoDB
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(uri, {})
     .then(() => {
-        app.listen(port, host, ()=>{
-        console.log(`Server running at http://localhost:`, port);
+        app.listen(port, host, () => {
+            console.log(`Server running at http://localhost:`, port);
         });
     })
-    .catch(err=>console.log(err.message));
+    .catch(err => console.log(err.message));
 
 //mount middleware
 app.use(
@@ -29,14 +32,14 @@ app.use(
         secret: "ajfeirf90aeu9eroejfoefj",
         resave: false,
         saveUninitialized: false,
-        store: new MongoStore({mongoUrl: uri}),
-        cookie: {maxAge: 60*60*1000},
-        
-        })
+        store: new MongoStore({ mongoUrl: uri }),
+        cookie: { maxAge: 60 * 60 * 1000 },
+    })
 );
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(favicon('./public/logo.ico'));
 
 //set up connection to routes
 app.use('/', mainRoutes);
