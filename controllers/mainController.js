@@ -4,11 +4,10 @@ const model = require('../models/user');
 exports.index = (req, res) => {
     let activePage = 'home';
     //uncomment once user model is added
-    /*let id = req.session.user;
+    let id = req.session.user;
     model.findById(id)
     .then(user=>{
       res.render("index", {user, activePage});
-    })*/
-    //delete once user model is added
-    res.render("index", { activePage });
+    })
+
 };

@@ -18,8 +18,8 @@ exports.signup = async (req, res) => {
 
   try {
     await user.save();
-    res.status(201).json({ message: 'User created successfully', user });
-    res.redirect('./user/login');
+    //res.status(201).json({ message: 'User created successfully', user });
+    res.redirect('/user/login');
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -27,14 +27,30 @@ exports.signup = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { username, password } = req.body;
-  const user = await User.findOne({ username });
-
-  if (!user) {
-    return res.status(400).json({ message: 'Invalid email or password' });
-  }
-  // const isMatch = await bcrypt.compare(password, user.password);
-  if(password !== user.password){
-    return res.status(400).json({ message: 'Invalid email or password' });
-  }
-  res.status(200).json({ message: 'Logged in successfully', user });
+  User.findOne({ username: username })
+  .then(user => {
+    if (!user) {
+        //return res.status(400).json({ message: 'Invalid email or password' });
+    } else {
+        // const isMatch = await bcrypt.compare(password, user.password);
+        if(password !== user.password){
+            //return res.status(400).json({ message: 'Invalid email or password' });
+        } else {
+            req.session.user = user._id;
+            res.redirect('/');
+        }
+        //res.status(200).json({ message: 'Logged in successfully', user });
+    }
+    
+  })
 };
+
+exports.logout = (req, res, next)=>{
+    req.session.destroy(err=>{
+        if(err) 
+           return next(err);
+       else
+            res.redirect('/');  
+    });
+   
+ };

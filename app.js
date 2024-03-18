@@ -58,7 +58,7 @@ app.use((req, res, next)=>{
     err.status = 404;
     //next(err) calls the next error handler
     next(err);
-});
+});*/
 
 app.use((err, req, res, next)=>{
     console.log(err.stack);
@@ -69,4 +69,4 @@ app.use((err, req, res, next)=>{
 
     res.status(err.status);
     res.render('error', {error: err});
-});*/
+});
