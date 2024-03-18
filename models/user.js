@@ -18,10 +18,6 @@ const userSchema = new mongoose.Schema({
     },
   },
 
-  profileImage: {
-    data: Buffer,
-    contentType: String,
-  },
 });
 
 const User = mongoose.model("User", userSchema);
