@@ -1,4 +1,8 @@
-<div class="container">
+<%- include('../partials/header.ejs') %>
+
+<title>Sweat Rivals | Login</title>
+
+<div class="container text-white">
     <h2>Login</h2>
     <form action="/user/login" method="POST">
       <label for="username">Username:</label>
@@ -10,3 +14,6 @@
       <input type="submit" value="Submit" />
     </form>
   </div>
+
+<%- include('../partials/footer.ejs') %>
+

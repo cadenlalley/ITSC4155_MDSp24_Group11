@@ -49,10 +49,10 @@
                 <!-- Uncomment following EJS by removing the '#' when User Authentication is implemented: -->
                 <%# if (!user) { %>
                     <li class="nav-item mx-2">
-                        <a class="nav-link <%= activePage === 'signup' ? 'active fw-bold' : '' %>" href="#">Signup</a>
+                        <a class="nav-link <%= activePage === 'signup' ? 'active fw-bold' : '' %>" href="/user/signup">Signup</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link <%= activePage === 'login' ? 'active fw-bold' : '' %>" href="#">Login</a>
+                        <a class="nav-link <%= activePage === 'login' ? 'active fw-bold' : '' %>" href="/user/login">Login</a>
                     </li>
                     <%# } else { %>
                         <li class="nav-item mx-2">
