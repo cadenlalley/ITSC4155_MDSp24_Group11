@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const config = require("./config.js");
 const mainRoutes = require('./routes/mainRoutes');
 const groupRoutes = require('./routes/groupRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 //create app
 const app = express();
@@ -23,7 +24,7 @@ app.set("view engine", "ejs");
 mongoose.connect(uri, {})
     .then(() => {
         app.listen(port, host, () => {
-            console.log(`Server running at http://localhost:`, port);
+            console.log(`Server running at http://localhost:` + port);
         });
     })
     .catch(err => console.log(err.message));
@@ -40,6 +41,7 @@ app.use(
 );
 
 app.use(express.static("public"));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(favicon('./public/logo.ico'));
 app.use(morgan('tiny'));
@@ -47,6 +49,7 @@ app.use(morgan('tiny'));
 //set up connection to routes
 app.use('/', mainRoutes);
 app.use('/groups', groupRoutes);
+app.use('/user', userRoutes);
 
 /*
 //set up error responses
