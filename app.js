@@ -51,6 +51,7 @@ app.use(morgan('tiny'));
 app.use('/', mainRoutes);
 app.use('/groups', groupRoutes);
 app.use('/user', userRoutes);
+app.use('/friends', friendRoutes);
 
 /*
 //set up error responses
