@@ -1,13 +1,16 @@
 const User = require('../models/user');
 // const bcrypt = require('bcrypt');
 
-
 exports.showSignup = (req, res) => {
-    res.render('./user/signup');
+    const activePage = 'signup';
+
+    res.render('./user/signup', { activePage });
 };
 
 exports.showLogin = (req, res) => {
-  res.render('./user/login');
+    const activePage = 'login';
+
+    res.render('./user/login', { activePage });
 };
 
 exports.signup = async (req, res) => {
