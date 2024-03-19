@@ -1,7 +1,7 @@
 const model = require('../models/user');
 
 exports.index = (req, res) => {
-    let activePage = 'groups';
+    const activePage = 'groups';
     //uncomment once user model is added
     /*let id = req.session.user;
     model.findById(id)

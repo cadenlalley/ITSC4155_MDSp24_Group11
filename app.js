@@ -9,6 +9,7 @@ const config = require("./config.js");
 const mainRoutes = require('./routes/mainRoutes');
 const groupRoutes = require('./routes/groupRoutes');
 const userRoutes = require('./routes/userRoutes');
+const friendRoutes = require('./routes/friendRoutes');
 
 //create app
 const app = express();
@@ -50,6 +51,7 @@ app.use(morgan('tiny'));
 app.use('/', mainRoutes);
 app.use('/groups', groupRoutes);
 app.use('/user', userRoutes);
+app.use('/friends', friendRoutes);
 
 /*
 //set up error responses
