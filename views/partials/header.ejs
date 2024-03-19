@@ -44,7 +44,7 @@
                     <li class="nav-item mx-2">
                             <a class="nav-link <%= activePage === 'groups' ? 'active fw-bold' : '' %>" href="/groups">Groups</a>
                     </li>
-                    <% } %>
+                <% } %>
             </ul>
         </div>
 
@@ -61,8 +61,8 @@
                     </li>
                     <% } else { %>
                         <li class="nav-item mx-2">
-                            <a class="nav-link <%= activePage === 'profile fw-bold' ? 'active' : '' %>"
-                                href="/user/profile">Profile</a>
+                            <a class="nav-link <%= activePage === 'profile' ? 'active fw-bold' : '' %>"
+                                href="/user/profile">My Profile</a>
                         </li>
                         <% } %>
             </ul>

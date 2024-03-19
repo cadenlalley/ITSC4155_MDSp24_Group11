@@ -10,6 +10,7 @@ const mainRoutes = require('./routes/mainRoutes');
 const groupRoutes = require('./routes/groupRoutes');
 const userRoutes = require('./routes/userRoutes');
 const friendRoutes = require('./routes/friendRoutes');
+const challengeRoutes = require('./routes/challengeRoutes');
 
 //create app
 const app = express();
@@ -52,6 +53,7 @@ app.use('/', mainRoutes);
 app.use('/groups', groupRoutes);
 app.use('/user', userRoutes);
 app.use('/friends', friendRoutes);
+app.use('/challenges', challengeRoutes);
 
 /*
 //set up error responses
