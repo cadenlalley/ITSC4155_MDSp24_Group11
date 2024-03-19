@@ -1,59 +1,80 @@
 const User = require('../models/user');
-// const bcrypt = require('bcrypt');
 
 exports.showSignup = (req, res) => {
     const activePage = 'signup';
 
-    res.render('./user/signup', { activePage });
+    // This has to be here so that conditional rendering of navbar links works properly
+    // if there is a better solution, feel free to change it.
+    const user = undefined; 
+
+    res.render('./user/signup', { activePage, user });
 };
 
 exports.showLogin = (req, res) => {
     const activePage = 'login';
 
-    res.render('./user/login', { activePage });
+    // This has to be here so that conditional rendering of navbar links works properly
+    // if there is a better solution, feel free to change it.
+    const user = undefined; 
+
+    res.render('./user/login', { activePage, user });
 };
 
 exports.signup = async (req, res) => {
-  const { username, firstName, lastName, email, password } = req.body;
-  // const hashedPassword = await bcrypt.hash(password, 10);
-  const user = new User({ username, firstName, lastName, email, password });
-  console.log(user);
+    const { username, firstName, lastName, email, password } = req.body;
+    const user = new User({ username, firstName, lastName, email, password });
+    console.log(user);
 
-  try {
-    await user.save();
-    //res.status(201).json({ message: 'User created successfully', user });
-    res.redirect('/user/login');
-  } catch (error) {
-    res.status(500).json({ error });
-  }
+    try {
+        await user.save();
+        // Flash Success 
+        res.redirect('/user/login');
+    } catch (error) {
+        res.status(500).json({ error });
+    }
 };
 
 exports.login = async (req, res) => {
-  const { username, password } = req.body;
-  User.findOne({ username: username })
-  .then(user => {
-    if (!user) {
-        //return res.status(400).json({ message: 'Invalid email or password' });
-    } else {
-        // const isMatch = await bcrypt.compare(password, user.password);
-        if(password !== user.password){
-            //return res.status(400).json({ message: 'Invalid email or password' });
-        } else {
-            req.session.user = user._id;
-            res.redirect('/');
-        }
-        //res.status(200).json({ message: 'Logged in successfully', user });
-    }
-    
-  })
+    const { username, password } = req.body;
+    User.findOne({ username: username })
+        .then(user => {
+            if (!user) {
+                // Flash Error 
+            } else {
+                user.checkPassword(password)
+                    .then((result) => {
+                        if (result) {
+                            req.session.user = user._id;
+                            // Flash Success
+                            res.redirect('/');
+                        } else {
+                            // Flash Error
+                            res.redirect('/user/login');
+                        }
+                    })
+            }
+
+        })
 };
 
-exports.logout = (req, res, next)=>{
-    req.session.destroy(err=>{
-        if(err) 
-           return next(err);
-       else
-            res.redirect('/');  
+exports.showProfile = (req, res) => {
+    const activePage = 'profile';
+
+    let id = req.session.user;
+    User.findById(id)
+        .then(user => {
+            res.render("user/index", { user, activePage });
+        })     
+}
+
+exports.logout = (req, res, next) => {
+    req.session.destroy(err => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/');
     });
-   
- };
+
+};
+
+

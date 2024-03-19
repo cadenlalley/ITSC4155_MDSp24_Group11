@@ -1,0 +1,17 @@
+<%- include('../partials/header.ejs') %>
+
+<title>Sweat Rivals | My Profile</title>      
+
+<main class="container text-white">
+    <h2>Welcome, <%= user.firstName %>!</h2>
+    <p>Username: <%= user.username %></p>
+    <p>First Name: <%= user.firstName %></p>
+    <p>Last Name: <%= user.lastName %></p>
+    <p>Email: <%= user.email %></p>
+
+    <a href="/user/logout">
+        <button class="btn btn-primary">Logout</button>
+    </a>
+</main>
+
+<%- include('../partials/footer.ejs') %> 
