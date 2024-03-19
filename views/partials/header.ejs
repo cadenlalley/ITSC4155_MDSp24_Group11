@@ -35,11 +35,11 @@
                         <a class="nav-link <%= activePage === 'home' ? 'active fw-bold' : '' %>" href="/">Home</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link <%= activePage === 'friends' ? 'active fw-bold' : '' %>" href="#">Friends</a>
+                        <a class="nav-link <%= activePage === 'friends' ? 'active fw-bold' : '' %>" href="/friends">Friends</a>
                     </li>
                     <li class="nav-item mx-2">
                         <a class="nav-link <%= activePage === 'challenges' ? 'active fw-bold' : '' %>"
-                                href="#">Challenges</a>
+                                href="/challenges">Challenges</a>
                     </li>
                     <li class="nav-item mx-2">
                             <a class="nav-link <%= activePage === 'groups' ? 'active fw-bold' : '' %>" href="/groups">Groups</a>
@@ -54,15 +54,15 @@
                 <!-- Uncomment following EJS by removing the '#' when User Authentication is implemented: -->
                 <% if (!user) { %>
                     <li class="nav-item mx-2">
-                        <a class="nav-link <%= activePage === 'signup' ? 'active fw-bold' : '' %>" href="#">Signup</a>
+                        <a class="nav-link <%= activePage === 'signup' ? 'active fw-bold' : '' %>" href="/user/signup">Signup</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link <%= activePage === 'login' ? 'active fw-bold' : '' %>" href="#">Login</a>
+                        <a class="nav-link <%= activePage === 'login' ? 'active fw-bold' : '' %>" href="/user/login">Login</a>
                     </li>
                     <% } else { %>
                         <li class="nav-item mx-2">
                             <a class="nav-link <%= activePage === 'profile fw-bold' ? 'active' : '' %>"
-                                href="#">Profile</a>
+                                href="/user/profile">Profile</a>
                         </li>
                         <% } %>
             </ul>

@@ -9,6 +9,7 @@ const config = require("./config.js");
 const mainRoutes = require('./routes/mainRoutes');
 const groupRoutes = require('./routes/groupRoutes');
 const userRoutes = require('./routes/userRoutes');
+const friendRoutes = require('./routes/friendRoutes');
 
 //create app
 const app = express();
