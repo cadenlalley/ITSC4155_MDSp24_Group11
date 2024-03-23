@@ -12,6 +12,12 @@
     <a href="/user/logout">
         <button class="btn btn-primary">Logout</button>
     </a>
+    <form>
+        <button type="submit" formmethod="POST" formaction="/user/delete/<%= user.id%>/?_method=DELETE">Delete</button>
+    </form>
+    <a href="/user/delete/<%= user.id%>/?_method=DELETE">
+        <button class="btn btn-danger">Delete Account</button>
+    </a>
 </main>
 
 <%- include('../partials/footer.ejs') %> 

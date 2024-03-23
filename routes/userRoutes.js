@@ -14,14 +14,16 @@ router.get('/login', isGuest, userController.showLogin);
 // POST /user/signup : creates a new user
 router.post('/signup', isGuest, userController.signup);
 
-
 // POST /user/login : logs in a user
 router.post('/login', isGuest, userController.login);
 
-// POST /users/logout: logout a user
+// POST /user/logout: logout a user
 router.get('/logout', isLoggedIn, userController.logout);
 
-// GET /users/profile: check profile
+// GET /user/profile: check profile
 router.get('/profile', isLoggedIn, userController.showProfile);
+
+//DELETE /user/:id - delete the event identified by id
+router.delete('/delete/:id', isLoggedIn, userController.delete);
 
 module.exports = router;

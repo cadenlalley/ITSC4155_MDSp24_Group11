@@ -77,4 +77,13 @@ exports.logout = (req, res, next) => {
 
 };
 
-
+exports.delete = (req, res) => {
+    let id = req.params.id;
+    //let id = req.session.user._id;
+    User.findByIdAndDelete(id, {useFindAndModify: false})
+    //User.deleteOne(_id, id)
+        .then(user => {
+            //let activePage = 'home'
+            res.redirect('/');
+        })     
+}
