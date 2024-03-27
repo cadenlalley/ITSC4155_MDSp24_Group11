@@ -28,6 +28,7 @@ exports.signup = async (req, res) => {
     try {
         await user.save();
         // Flash Success 
+        req.flash('success', 'Account has been created');  
         res.redirect('/user/login');
     } catch (error) {
         res.status(500).json({ error });
@@ -40,15 +41,19 @@ exports.login = async (req, res) => {
         .then(user => {
             if (!user) {
                 // Flash Error 
+                req.flash('error', 'Wrong Email Address');  
+                res.redirect('/user/login');
             } else {
                 user.checkPassword(password)
                     .then((result) => {
                         if (result) {
                             req.session.user = user._id;
                             // Flash Success
+                            req.flash('success', 'You have successfully logged in');
                             res.redirect('/');
                         } else {
                             // Flash Error
+                            req.flash('error', 'Wrong Password'); 
                             res.redirect('/user/login');
                         }
                     })
@@ -72,6 +77,7 @@ exports.logout = (req, res, next) => {
         if (err) {
             return next(err);
         }
+        req.flash('success', 'You have successfully logged out');
         res.redirect('/');
     });
 
@@ -79,11 +85,10 @@ exports.logout = (req, res, next) => {
 
 exports.delete = (req, res) => {
     let id = req.params.id;
-    //let id = req.session.user._id;
+
     User.findByIdAndDelete(id, {useFindAndModify: false})
-    //User.deleteOne(_id, id)
         .then(user => {
-            //let activePage = 'home'
+            req.flash('success', 'You have successfully deleted your account');
             res.redirect('/');
         })     
 }
