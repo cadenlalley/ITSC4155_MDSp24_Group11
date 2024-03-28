@@ -22,7 +22,7 @@ exports.showLogin = (req, res) => {
 
 exports.signup = async (req, res) => {
     const { username, firstName, lastName, email, password } = req.body;
-    const user = new User({ username, firstName, lastName, email, password });
+    const user = new User({ username, firstName, lastName, email, password, undefined });
     console.log(user);
 
     try {
