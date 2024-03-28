@@ -18,6 +18,10 @@ const userSchema = new Schema({
             },
             message: (props) => `Password should be at least 8 characters!`,
         },
+        friendships: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Friendship',
+        }],
     },
 
 });
