@@ -18,12 +18,13 @@ const userSchema = new Schema({
             },
             message: (props) => `Password should be at least 8 characters!`,
         },
-        friendships: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Friendship',
-        }],
-    },
 
+    },
+    friendships: [{
+        type: Schema.ObjectId,
+        ref: 'Friendship',
+    }],
+    createdAt: { type: Date, default: Date.now },
 });
 
 userSchema.pre('save', function(next) {
