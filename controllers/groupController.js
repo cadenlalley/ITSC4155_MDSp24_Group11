@@ -14,7 +14,6 @@ exports.index = (req, res) => {
 exports.createGroup = (req, res) => {
     const { groupName } = req.body;
 
-    // Check if the group name is provided
     if (!groupName) {
         return res.status(400).send('Group name is required');
     }
