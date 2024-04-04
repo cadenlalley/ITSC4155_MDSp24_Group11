@@ -16,24 +16,30 @@
     </div>
 
     <div class="container" id="search-results">
-        <table class="table table-dark table-striped">
-            <tbody class="w-100">
-                <% randomUsers.map(randomUser => { %>
-                    <tr class="d-flex flex-row w-100">
-                        <td class="w-50 fw-bold fs-4"><%= randomUser.username %></td>
-                        <td class="w-50 d-flex flex-row-reverse">
-                            <% if (user) {%>
-                                <% if (user.friendships) { %>
-                                    <a href="/" class="btn btn-success">View Profile</a> 
-                                <% } else { %>
-                                    <a href="/friends/add/<%= randomUser._id %>/" class="btn btn-primary">Send Friend Request</a>
-                                <% } %>
-                            <% } %>
+        <table class="table table-dark">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col">Username</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                    <th scope="col">View/Add Friend</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% prospects.map(prospect => { %> 
+                    <tr class="text-center fs-4">
+                        <th scope="row"><%= prospect.username %></th>
+                        <td>Not Friends</td>
+                        <td>Maybe add user points here?</td>
+                        <td>
+                            <form>
+                                <button formmethod="POST" formaction="/friends/add/<%= prospect._id %>" class="btn btn-success">Send Request</button>
+                            </form>
                         </td>
                     </tr>
-                <% }); %>
+                <% }) %>
             </tbody>
+        </table>
     </div>
-
 </main>
 

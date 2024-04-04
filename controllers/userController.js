@@ -5,7 +5,7 @@ exports.showSignup = (req, res) => {
 
     // This has to be here so that conditional rendering of navbar links works properly
     // if there is a better solution, feel free to change it.
-    const user = undefined; 
+    const user = undefined;
 
     res.render('./user/signup', { activePage, user });
 };
@@ -15,7 +15,7 @@ exports.showLogin = (req, res) => {
 
     // This has to be here so that conditional rendering of navbar links works properly
     // if there is a better solution, feel free to change it.
-    const user = undefined; 
+    const user = undefined;
 
     res.render('./user/login', { activePage, user });
 };
@@ -28,7 +28,7 @@ exports.signup = async (req, res) => {
     try {
         await user.save();
         // Flash Success 
-        req.flash('success', 'Account has been created');  
+        req.flash('success', 'Account has been created');
         res.redirect('/user/login');
     } catch (error) {
         res.status(500).json({ error });
@@ -41,7 +41,7 @@ exports.login = async (req, res) => {
         .then(user => {
             if (!user) {
                 // Flash Error 
-                req.flash('error', 'Wrong Email Address');  
+                req.flash('error', 'Wrong Email Address');
                 res.redirect('/user/login');
             } else {
                 user.checkPassword(password)
@@ -53,7 +53,7 @@ exports.login = async (req, res) => {
                             res.redirect('/');
                         } else {
                             // Flash Error
-                            req.flash('error', 'Wrong Password'); 
+                            req.flash('error', 'Wrong Password');
                             res.redirect('/user/login');
                         }
                     })
@@ -69,7 +69,7 @@ exports.showProfile = (req, res) => {
     User.findById(id)
         .then(user => {
             res.render("user/index", { user, activePage });
-        })     
+        })
 }
 
 exports.logout = (req, res, next) => {
@@ -77,18 +77,29 @@ exports.logout = (req, res, next) => {
         if (err) {
             return next(err);
         }
-        req.flash('success', 'You have successfully logged out');
+
+        // TODO: Remove comments
+        // Commenting this out as it was giving errors upon logout
+        // since the user is no longer in the session
+        // req.flash('success', 'You have successfully logged out');
         res.redirect('/');
     });
-
 };
 
 exports.delete = (req, res) => {
     let id = req.params.id;
 
-    User.findByIdAndDelete(id, {useFindAndModify: false})
-        .then(user => {
-            req.flash('success', 'You have successfully deleted your account');
+    User.findByIdAndDelete(id, { useFindAndModify: false })
+        .then(() => {
+            req.session.destroy(err => {
+                if (err) {
+                    return next(err);
+                }
+            })
+
+            // TODO: Remove comments
+            // Having the same error here as in logout
+            // req.flash('success', 'You have successfully deleted your account');
             res.redirect('/');
-        })     
+        })
 }

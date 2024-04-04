@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
-
+const { friendSchema } = require("./friend");
 
 const Schema = mongoose.Schema;
 
@@ -18,12 +18,10 @@ const userSchema = new Schema({
             },
             message: (props) => `Password should be at least 8 characters!`,
         },
-        friendships: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Friendship',
-        }],
-    },
 
+    },
+    friendsList: [friendSchema],
+    createdAt: { type: Date, default: Date.now },
 });
 
 userSchema.pre('save', function(next) {

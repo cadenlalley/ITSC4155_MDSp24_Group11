@@ -47,7 +47,7 @@ app.use(flash());
 
 app.use((req, res, next) => {
     //console.log(req.session);
-    res.locals.user = req.session.user||null;
+    res.locals.user = req.session.user || null;
     res.locals.errorMessages = req.flash('error');
     res.locals.successMessages = req.flash('success');
     next();
@@ -59,7 +59,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(favicon('./public/logo.ico'));
 app.use(morgan('tiny'));
 app.use(methodOverride('_method'));
-
 
 //set up connection to routes
 app.use('/', mainRoutes);
@@ -77,13 +76,13 @@ app.use((req, res, next)=>{
     next(err);
 });*/
 
-app.use((err, req, res, next)=>{
+app.use((err, req, res, next) => {
     console.log(err.stack);
-    if(!err.status){
+    if (!err.status) {
         err.status = 500;
         err.message = ("Internal Server Error");
     }
 
     res.status(err.status);
-    res.render('error', {error: err});
+    res.render('error', { error: err });
 });
