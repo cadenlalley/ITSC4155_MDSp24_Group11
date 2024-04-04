@@ -4,7 +4,7 @@ const groupController = require('../controllers/groupController');
 
 
 // Route to render the group creation page
-//router.get('/create', groupController.createGroupPage);
+router.get('/new', groupController.createGroupPage);
 
 // Route to handle the creation of a new group
 //router.post('/create', groupController.createGroup);

@@ -11,6 +11,11 @@ exports.index = (req, res) => {
         })
 }
 
+exports.createGroupPage = (req, res) => {
+    const activePage = 'groups';
+    res.render('group/new', { activePage });
+}
+
 exports.createGroup = (req, res) => {
     const { groupName } = req.body;
 

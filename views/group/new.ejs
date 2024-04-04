@@ -1,0 +1,24 @@
+<%- include('../partials/header.ejs') %>
+
+<title>Sweat Rivals | Groups</title>      
+
+<main class="container text-white">
+    <h2>Create a New Group</h2>
+</main>
+
+<div class="container text-white">
+    <form action="/group/create" method="POST">
+        <label for="groupName">Group name:</label>
+        <input type="text" id="groupName" name="groupName" required>
+        <br>
+        <label for="groupDescription">Group description:</label>
+        <br>
+        <textarea type="text" id="groupDescription" name="groupDescription"></textarea>
+        <br>
+        <label for="groupMembers">Group Members:</label>
+        // Have to figure out how to display the freinds list and select the ones to add to the group
+      </form>
+</div>
+
+
+<%- include('../partials/footer.ejs') %> 
