@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
-
+const { friendSchema } = require("./friend");
 
 const Schema = mongoose.Schema;
 
@@ -20,10 +20,7 @@ const userSchema = new Schema({
         },
 
     },
-    friendships: [{
-        type: Schema.ObjectId,
-        ref: 'Friendship',
-    }],
+    friendsList: [friendSchema],
     createdAt: { type: Date, default: Date.now },
 });
 

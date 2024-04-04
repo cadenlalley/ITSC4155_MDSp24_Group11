@@ -1,5 +1,6 @@
 const userModel = require('../models/user');
-const friendshipModel = require('../models/friendship');
+const { Friend } = require('../models/friend');
+
 const activePage = 'friends';
 
 exports.index = (req, res, next) => {
@@ -7,22 +8,23 @@ exports.index = (req, res, next) => {
 
     userModel.findById(id)
         .then(user => {
-            friendshipModel.find({ $or: [{ user1: user._id }, { user2: user._id }] })
-                .then(friendships => {
-                    res.render('friend/index', { user, friendships, activePage });
-                })
-                .catch(err => {
-                    next(err);
-                })
+            res.render('friend/index', { user, activePage });
+        })
+        .catch(err => {
+            next(err);
         })
 }
 
 exports.showFriend = (req, res) => {
     let id = req.session.user;
+    let friendId = req.params.id;
 
     userModel.findById(id)
         .then(user => {
-            res.render('friend/show', { user, activePage });
+            userModel.findById(friendId)
+                .then(friend => {
+                    res.render('friend/show', { user, friend, activePage });
+                })
         })
         .catch(err => {
             next(err);
@@ -31,15 +33,37 @@ exports.showFriend = (req, res) => {
 
 exports.showAddFriend = (req, res, next) => {
     let id = req.session.user;
+    let friendIds = [];
 
     userModel.findById(id)
         .then(user => {
-            userModel.aggregate([{ $match: { _id: { $ne: user._id } } }, { $limit: 20 }])
-                .then(randomUsers => {
-                    // Get friendship IDs stored in the current user, see if they match.
-                    // if they do, add object to array. EX: {randomUser, frienshipStatus}
-                    res.render('friend/add', { user, randomUsers, activePage });
+            if (user.friendsList.length > 0) {
+                user.friendsList.forEach(friend => {
+                    if (!friendIds.includes(friend.origin)) {
+                        friendIds.push(friend.origin);
+                    }
+                    if (!friendIds.includes(friend.target)) {
+                        friendIds.push(friend.target);
+                    }
                 });
+                userModel.find({ _id: { $nin: friendIds } })
+                    .limit(25)
+                    .then(prospects => {
+                        res.render('friend/add', { user, prospects, activePage });
+                    })
+                    .catch(err => {
+                        next(err);
+                    });
+            } else {
+                userModel.find({ _id: { $ne: user._id } })
+                    .limit(25)
+                    .then(prospects => {
+                        res.render('friend/add', { user, prospects, activePage });
+                    })
+                    .catch(err => {
+                        next(err);
+                    });
+            }
         })
         .catch(err => {
             next(err);
@@ -47,39 +71,101 @@ exports.showAddFriend = (req, res, next) => {
 }
 
 exports.addFriend = (req, res, next) => {
-    let id = req.session.user;
-    let friendId = req.body.friendId;
+    let userId = req.session.user;
+    let friendId = req.params.id;
 
-    // Find current user in the DB
-    userModel.findById(id)
+    userModel.findById(userId)
         .then(user => {
+            userModel.findById(friendId)
+                .then(prospect => {
+                    let friend = new Friend({
+                        origin: user._id,
+                        originName: user.username,
+                        target: prospect._id,
+                        targetName: prospect.username,
+                    });
+                    prospect.friendsList.push(friend);
+                    user.friendsList.push(friend);
+                    user.save()
+                        .then(() => {
+                            prospect.save()
+                                .then(() => {
+                                    res.redirect('/friends');
+                                })
+                        })
+                })
+        })
+        .catch(err => {
+            next(err);
+        });
+};
 
-            // Find the friend in the DB using the ID param
+exports.acceptFriend = (req, res, next) => {
+    let userId = req.session.user;
+    let friendId = req.params.friendId;
+    let friendShipId = req.params.friendShipId;
+
+    userModel.findById(userId)
+        .then(user => {
             userModel.findById(friendId)
                 .then(friend => {
-
-                    // Find and update, or create a new friendship
-                    friendshipModel.findOneAndUpdate({ $or: [{ user1: user._id, user2: friend._id }, { user1: friend._id, user2: user._id }] }, { new: true, upsert: true })
-                        .then(friendship => {
-
-                            // Add the friendship ID to the current user's friendships array
-                            // (We will add the same ID to the other user when they accept the request)
-                            userModel.findByIdAndUpdate(user._id, {
-                                // Change array
-                                $set: {
-                                    friendships: {
-                                        // If the friendship ID is already in the array, do nothing
-                                        $cond: {
-                                            if: { $in: [friendship._id, user.friendships] },
-                                            then: user.friendships,
-                                            else: user.friendships.concat(friendship._id)
-                                        }
-                                    }
-                                }
-                            })
+                    user.friendsList.forEach(userFriends => {
+                        if (userFriends._id == friendShipId) {
+                            userFriends.status = 'Friends';
+                            userFriends.isFriend = true;
+                            return;
+                        }
+                    })
+                    friend.friendsList.forEach(friendFriends => {
+                        if (friendFriends._id == friendShipId) {
+                            friendFriends.status = 'Friends';
+                            friendFriends.isFriend = true;
+                            return;
+                        }
+                    })
+                    user.save()
+                        .then(() => {
+                            friend.save()
                                 .then(() => {
+                                    res.redirect('/friends');
+                                })
+                        })
+                })
+        })
+        .catch(err => {
+            next(err);
+        });
+};
 
-                                    // Redirect to the friends page
+exports.declineFriend = (req, res, next) => {
+    let userId = req.session.user;
+    let friendId = req.params.friendId;
+    let friendShipId = req.params.friendShipId;
+
+
+    userModel.findById(userId)
+        .then(user => {
+            userModel.findById(friendId)
+                .then(friend => {
+                    let hashmap = new Map();
+                    user.friendsList.forEach(userFriends => {
+                        if (userFriends._id == friendShipId) {
+                            userFriends.status = 'Rejected';
+                            userFriends.isFriend = true;
+                            return;
+                        }
+                    })
+                    friend.friendsList.forEach(friendFriends => {
+                        if (friendFriends._id == friendShipId) {
+                            friendFriends.status = 'Rejected';
+                            friendFriends.isFriend = true;
+                            return;
+                        }
+                    })
+                    user.save()
+                        .then(() => {
+                            friend.save()
+                                .then(() => {
                                     res.redirect('/friends');
                                 })
                         })

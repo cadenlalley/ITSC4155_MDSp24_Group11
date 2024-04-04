@@ -9,21 +9,86 @@
         <button class="btn btn-primary my-2">Add Friend</button>
     </a>
 
-    <% if (friendships.length == 0) {%> 
+    <% if (user.friendsList.length == 0) {%> 
         <p>You have no friends!</p>
     <% } else { %>
-        <div class="container" id="search-results">
-            <table class="table table-dark table-striped">
-                <tbody class="">
-                    <thead>
-                        <tr class="d-flex flex-row">
-                            <th class="fw-bold fs-3">Username</td>
-                            <th class="fw-bold fs-3">Status</td>
-                            <th class="fw-bold fs-3">Status</td>
+        <div class="container my-5" id="search-results">
+            <h2 class="text-center pb-2">Friends</h2>
+            <table class="table table-dark">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">Username</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Lifetime Points</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% user.friendsList.map(friend => { %> 
+                        <tr class="text-center fs-4">
+                            <th scope="row"><%= friend.origin.equals(user._id) ? friend.targetName : friend.originName %></th>
+                            <td><%= friend.status %></td>
+                            <td>0 Points</td>
+                            <% if (friend.status === 'Friends') { %>
+                                <td>
+                                    <a 
+                                        href="/friends/view/<%= friend.origin.equals(user._id) ? friend.target : friend.origin %>"
+                                        class="btn btn-primary">
+                                        View Proile
+                                    </a>
+                                </td>
+                            <% } else if (friend.status === 'Rejected') { %>
+                                <% if (friend.origin.equals(user._id)) { %>
+                                    <td>
+                                        <p class="text-red">You've Been Rejected ;(</p>
+                                    </td>
+                                <% } else { %>
+                                   <td>
+                                        <p class="text-red">You Rejected Them ;)</p>
+                                    </td> 
+                                <% } %>
+                            <% } else if (friend.origin.equals(user._id)) { %>
+                                <td>
+                                    <form>
+                                        <button 
+                                            formmethod="POST" 
+                                            formaction="/friends/decline/<%= friend._id %>/<%= friend.origin.equals(user._id) ? friend.target : friend.origin %>" 
+                                            class="btn btn-danger" 
+                                            type="submit">
+                                                Decline 
+                                            </button>
+                                                                            
+                                    </form>
+                                </td>
+                            <% } else { %>
+                                <td>
+                                    <form>
+                                        <button 
+                                            formmethod="POST" 
+                                            formaction="/friends/accept/<%= friend._id %>/<%= friend.origin.equals(user._id) ? friend.target : friend.origin %>" 
+                                            class="btn btn-success" 
+                                            type="submit">
+                                                Accept
+                                            </button>
+                                                                            
+                                    </form>
+                                    <form>
+                                        <button 
+                                            formmethod="POST" 
+                                            formaction="/friends/decline/<%= friend._id %>/<%= friend.origin.equals(user._id) ? friend.target : friend.origin %>" 
+                                            class="btn btn-danger" 
+                                            type="submit">
+                                                Decline 
+                                            </button>
+                                                                            
+                                    </form>
+                                </td>
+                            <% } %>
                         </tr>
-                    </thead>
+                    <% }) %>
                 </tbody>
-            </div>
+            </table>
+        </div>
     <% } %>
 </main>
 
