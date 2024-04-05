@@ -52,10 +52,10 @@
                                     <form>
                                         <button 
                                             formmethod="POST" 
-                                            formaction="/friends/decline/<%= friend._id %>/<%= friend.origin.equals(user._id) ? friend.target : friend.origin %>" 
+                                            formaction="/friends/cancel/<%= friend._id %>/<%= friend.origin.equals(user._id) ? friend.target : friend.origin %>" 
                                             class="btn btn-danger" 
                                             type="submit">
-                                                Decline 
+                                                Cancel 
                                             </button>
                                                                             
                                     </form>
