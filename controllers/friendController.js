@@ -137,6 +137,30 @@ exports.acceptFriend = (req, res, next) => {
         });
 };
 
+exports.cancelFriend = (req, res, next) => {
+    let userId = req.session.user;
+    let friendId = req.params.friendId;
+    let friendShipId = req.params.friendShipId;
+    userModel.findById(userId)
+        .then(user => {
+            userModel.findById(friendId)
+                .then(friend => {
+                    user.friendsList.remove(friendShipId);
+                    friend.friendsList.remove(friendShipId);
+                    user.save()
+                        .then(() => {
+                            friend.save()
+                                .then(() => {
+                                    res.redirect('/friends');
+                                })
+                        })
+                })
+        })
+        .catch(err => {
+            next(err);
+        });
+};
+
 exports.declineFriend = (req, res, next) => {
     let userId = req.session.user;
     let friendId = req.params.friendId;
@@ -147,7 +171,6 @@ exports.declineFriend = (req, res, next) => {
         .then(user => {
             userModel.findById(friendId)
                 .then(friend => {
-                    let hashmap = new Map();
                     user.friendsList.forEach(userFriends => {
                         if (userFriends._id == friendShipId) {
                             userFriends.status = 'Rejected';
