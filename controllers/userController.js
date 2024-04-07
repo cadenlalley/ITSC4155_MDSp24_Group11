@@ -103,3 +103,30 @@ exports.delete = (req, res) => {
             res.redirect('/');
         })
 }
+
+exports.showForm = (req, res) => {
+    const activePage = 'profile';
+    let id = req.session.user;
+    User.findById(id)
+        .then(user => {
+            res.render("user/inputForm", { user, activePage });
+        })
+}
+
+exports.inputForm = (req, res) => {
+    const activePage = 'profile';
+    let id = req.session.user;
+    let calIntake = req.body.calorieIntake;
+    let calLoss = req.body.calorieLoss
+    let weight = req.body.weight;
+    
+    User.findByIdAndUpdate(id, {$inc: {calorieIntake: calIntake,  calorieLoss: calLoss,  weight: weight}}, { useFindAndModify: false })
+    .then(user=>{
+        req.flash('success', 'The form has been submitted');
+        res.render("user/index", { user, activePage });
+    })
+    .catch(err => {
+        next(err);
+    });
+
+}

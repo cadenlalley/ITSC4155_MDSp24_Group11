@@ -26,4 +26,10 @@ router.get('/profile', isLoggedIn, userController.showProfile);
 //DELETE /user/:id - delete the event identified by id
 router.delete('/delete/:id', isLoggedIn, userController.delete);
 
+// GET /user/form : renders form page
+router.get('/form', isLoggedIn, userController.showForm);
+
+// POST /user/form : adds to the users calorie and weight info
+router.post('/form', isLoggedIn, userController.inputForm);
+
 module.exports = router;
