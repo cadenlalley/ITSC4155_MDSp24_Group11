@@ -1,0 +1,21 @@
+<%- include('../partials/header.ejs') %>
+
+<title>Sweat Rivals | Login</title>
+
+<div class="container text-white">
+    <h2>Calorie/Weight Input Form</h2>
+    <form action="/user/form" method="POST">
+      <label for="calorieIntake">Calories Consumed:</label>
+      <input type="number" id="calorieIntake" name="calorieIntake" />
+      <br />
+      <label for="calorieLoss">Calories Lost:</label>
+      <input type="number" id="calorieLoss" name="calorieLoss" />
+      <br />
+      <label for="weight">Weight:</label>
+      <input type="number" id="weight" name="weight" />
+      <br />
+      <input type="submit" value="Submit" />
+    </form>
+  </div>
+
+<%- include('../partials/footer.ejs') %>
