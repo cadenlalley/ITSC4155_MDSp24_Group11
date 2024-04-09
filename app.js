@@ -67,14 +67,14 @@ app.use('/user', userRoutes);
 app.use('/friends', friendRoutes);
 app.use('/challenges', challengeRoutes);
 
-/*
+
 //set up error responses
 app.use((req, res, next)=>{
     let err = new Error('The server cannot locate '+ req.url);
     err.status = 404;
     //next(err) calls the next error handler
     next(err);
-});*/
+});
 
 app.use((err, req, res, next) => {
     console.log(err.stack);
@@ -82,7 +82,7 @@ app.use((err, req, res, next) => {
         err.status = 500;
         err.message = ("Internal Server Error");
     }
-
+    let activePage = 'home';
     res.status(err.status);
-    res.render('error', { error: err });
+    res.render('error', { error: err , activePage});
 });

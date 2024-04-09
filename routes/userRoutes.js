@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController');
+const userController = require('../controllers/userController.js');
 
-const { isGuest, isLoggedIn } = require('../middleware/auth');
+const { isGuest, isLoggedIn } = require('../middleware/auth.js');
+const { validateSignUp, validateLogIn, validateResult} = require('../middleware/validator.js');
 
 
 // GET /user/signup : renders signup page
@@ -12,10 +13,10 @@ router.get('/signup', isGuest, userController.showSignup);
 router.get('/login', isGuest, userController.showLogin);
 
 // POST /user/signup : creates a new user
-router.post('/signup', isGuest, userController.signup);
+router.post('/signup', isGuest, validateSignUp, validateResult, userController.signup);
 
 // POST /user/login : logs in a user
-router.post('/login', isGuest, userController.login);
+router.post('/login', isGuest, validateLogIn, validateResult, userController.login);
 
 // POST /user/logout: logout a user
 router.get('/logout', isLoggedIn, userController.logout);
