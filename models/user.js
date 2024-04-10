@@ -5,21 +5,11 @@ const { friendSchema } = require("./friend");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    username: { type: String, required: false, unique: true },
-    firstName: { type: String, required: false },
-    lastName: { type: String, required: false },
-    email: { type: String, required: false, unique: true },
-    password: {
-        type: String,
-        required: false,
-        validate: {
-            validator: function(v) {
-                return v.length >= 8; // replace 8 with your desired minimum length
-            },
-            message: (props) => `Password should be at least 8 characters!`,
-        },
-
-    },
+    username: { type: String, required: [true, 'username is required'], unique: [true, 'this username has been used'] },
+    firstName: { type: String, required: [true, 'first name is required'] },
+    lastName: { type: String, required: [true, 'last name is required'] },
+    email: { type: String, required: [true, 'email is required'], unique: [true, 'this email address has been used'] },
+    password: { type: String, required: [true, 'password is required']},
     friendsList: [friendSchema],
     createdAt: { type: Date, default: Date.now },
     calorieIntake: {type: Number, required: false},
