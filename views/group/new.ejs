@@ -17,6 +17,9 @@
         <br>
         <label for="groupMembers">Group Members:</label>
         // Have to figure out how to display the freinds list and select the ones to add to the group
+        <% user.friendsList.forEach(function(friend) { %>
+            <p><%= friend.targetName %></p>
+          <% }); %>
       </form>
 </div>
 

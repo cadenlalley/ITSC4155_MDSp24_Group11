@@ -13,7 +13,11 @@ exports.index = (req, res) => {
 
 exports.createGroupPage = (req, res) => {
     const activePage = 'groups';
-    res.render('group/new', { activePage });
+    const id = req.session.user;
+    model.findById(id)
+        .then(user => {
+            res.render('group/new', { user, activePage });
+        })
 }
 
 exports.createGroup = (req, res) => {
