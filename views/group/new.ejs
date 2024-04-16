@@ -7,7 +7,7 @@
 </main>
 
 <div class="container text-white">
-    <form action="/group/create" method="POST">
+    <form action="/groups/create" method="POST">
         <label for="groupName">Group name:</label>
         <input type="text" id="groupName" name="groupName" required>
         <br>
@@ -16,10 +16,13 @@
         <textarea type="text" id="groupDescription" name="groupDescription"></textarea>
         <br>
         <label for="groupMembers">Group Members:</label>
-        // Have to figure out how to display the freinds list and select the ones to add to the group
+        <br>
         <% user.friendsList.forEach(function(friend) { %>
-            <p><%= friend.targetName %></p>
-          <% }); %>
+            <input type="checkbox" id="<%= friend._id %>" name="groupMembers" value="<%= friend._id %>">
+            <label for="<%= friend._id %>"><%= friend.targetName %></label>
+            <br>
+        <% }); %>
+        <input type="submit" value="Create Group">
       </form>
 </div>
 

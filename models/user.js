@@ -11,6 +11,7 @@ const userSchema = new Schema({
     email: { type: String, required: [true, 'email is required'], unique: [true, 'this email address has been used'] },
     password: { type: String, required: [true, 'password is required']},
     friendsList: [friendSchema],
+    groups: [{ type: Schema.ObjectId }],
     createdAt: { type: Date, default: Date.now },
     calorieIntake: {type: Number, required: false},
     calorieLoss: {type: Number, required: false},

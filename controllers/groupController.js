@@ -1,4 +1,6 @@
+// const User = require('../models/user');
 const model = require('../models/user');
+const groupModel = require('../models/group');
 
 
 exports.index = (req, res) => {
@@ -7,7 +9,10 @@ exports.index = (req, res) => {
     let id = req.session.user;
     model.findById(id)
         .then(user => {
-            res.render("group/index", { user, activePage });
+            groupModel.find({ _id: { $in: user.groups } })
+                .then(groups => {
+                    res.render("group/index", { user, groups, activePage });
+                })
         })
 }
 
@@ -16,21 +21,28 @@ exports.createGroupPage = (req, res) => {
     const id = req.session.user;
     model.findById(id)
         .then(user => {
-            res.render('group/new', { user, activePage });
+            res.render('./group/new', { user, activePage });
         })
 }
 
 exports.createGroup = (req, res) => {
-    const { groupName } = req.body;
+    const { groupName, groupDescription, groupMembers } = req.body;
 
     if (!groupName) {
         return res.status(400).send('Group name is required');
     }
-
+    // groupMembers.push(id);
+    console.log('Group Information:', { groupName, groupDescription, groupMembers });
     let id = req.session.user;
-    User.findByIdAndUpdate(id, { $push: { groups: { name: groupName } } })
+    let group = new groupModel({ groupName, groupDescription, groupMembers });
+    console.log('Group:', group);
+    group.save()
         .then(() => {
-            res.redirect('/groups');
+            model.findById(id).then(user => {
+                user.groups.push(group._id);
+                user.save();
+                res.redirect('/groups/');
+            })
         })
         .catch(err => {
             console.error('Error creating group:', err);
