@@ -19,14 +19,14 @@
         <br>
         <% user.friendsList.forEach(function(friend) { %>
             <% if (friend.isFriend) { %>
-                <% if (user._id !== friend.origin) { %>
+                <% if (friend.origin.equals(user._id)) { %>
                     <input type="checkbox" id="<%= friend.target %>" name="groupMembers" value="<%= friend.target %>">
                     <label for="<%= friend.target %>"><%= friend.targetName %></label>
                     <br>
                 <% } else { %>
                     <input type="checkbox" id="<%= friend.origin %>" name="groupMembers" value="<%= friend.origin %>">
                     <label for="<%= friend.origin %>"><%= friend.originName %></label>
-                    <br> 
+                    <br>
                 <% } %>
             <% } %>
         <% }); %>
