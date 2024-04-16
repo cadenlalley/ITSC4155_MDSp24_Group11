@@ -2,26 +2,42 @@
 
 <title>Sweat Rivals | Signup</title>
 
-<div class="container text-white">
-    <h2>Sign Up</h2>
-    <form action="/user/signup" method="POST" >
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" placeholder="Username" required/>
-      <br />
-      <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" placeholder="First Name" required/>
-        <br />
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" placeholder="Last Name" required/>
-        <br />
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" placeholder="Password" required/>
-      <br />
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" placeholder="Email" required/>
-      <br />
-      <input type="submit" value="Submit" />
-    </form>
+<div class="container text-white d-flex justify-content-center">
+    <div class="mb-5 mt-2">
+        <form action="/user/signup" method="POST" >
+
+            <div class="d-flex justify-content-center pb-3">
+                <h2 class="pb-2">Sign Up</h2>
+            </div>
+
+            <div class="mb-2">
+                <label for="username" class="form-label fw-bold">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required/>
+            </div>
+
+            <div class="mb-2">
+                <label for="email" class="form-label fw-bold">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required/>
+            </div>
+
+            <div class="mb-2">
+                <label for="firstName" class="form-label fw-bold">First Name:</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" required/>
+            </div>
+
+            <div class="mb-2">
+                <label for="lastName" class="form-label fw-bold">Last Name:</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" required/>
+            </div>
+            
+            <div class="mb-4">
+                <label for="password" class="form-label fw-bold">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required/>
+            </div>
+
+            <button class="btn btn-primary w-100" type="submit" value="Submit">Submit</button>
+        </form>
+    </div>
 </div>
 
 <%- include('../partials/footer.ejs') %>
