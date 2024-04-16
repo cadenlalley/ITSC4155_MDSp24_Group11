@@ -68,19 +68,18 @@
             </ul>
         </div>
     </nav>
-    <% if(errorMessages.length > 0) {%>
-        <% errorMessages.forEach(message=>{%>
-            <div class="alert alert-danger">
-                <%=message%>
+    <% if (errorMessages.length > 0) { %>
+        <% errorMessages.forEach(message => { %>
+                <div class="alert alert-danger">
+                    <%= message %>
+                </div>
+            <% }); %>
+    <% } %>
+    
+    <% if (successMessages.length > 0) { %> 
+        <% successMessages.forEach(message => { %>
+            <div class="alert alert-success">
+                <%= message %>
             </div>
-            <%});%>
-                <%}%>
-    
-                    <% if(successMessages.length > 0) {%>
-    
-                        <% successMessages.forEach(message=>{%>
-                            <div class="alert alert-success">
-                                <%=message%>
-                            </div>
-                            <%});%>
-                                <%}%>
+        <% }); %>
+    <% } %>

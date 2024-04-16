@@ -53,7 +53,7 @@ exports.login = async (req, res) => {
                             res.redirect('/');
                         } else {
                             // Flash Error
-                            req.flash('error', 'Wrong Password');
+                            req.flash('error', 'Incorrect password');
                             res.redirect('/user/login');
                         }
                     })
