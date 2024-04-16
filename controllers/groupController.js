@@ -20,14 +20,16 @@ exports.createGroupPage = (req, res) => {
     const activePage = 'groups';
     const id = req.session.user;
     model.findById(id)
-        .then(user => {
+        .then(user => {    
             res.render('./group/new', { user, activePage });
         })
 }
 
 exports.createGroup = (req, res) => {
     const { groupName, groupDescription } = req.body;
-    let groupMembers = req.body.groupMembers;
+    let groupMembers = [];
+
+    groupMembers = req.body.groupMembers;
 
     if (!groupName) {
         return res.status(400).send('Group name is required');
