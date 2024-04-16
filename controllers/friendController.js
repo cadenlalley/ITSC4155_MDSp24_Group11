@@ -90,6 +90,7 @@ exports.addFriend = (req, res, next) => {
                         .then(() => {
                             prospect.save()
                                 .then(() => {
+                                    req.flash('success', 'Friend request sent!');
                                     res.redirect('/friends');
                                 })
                         })
@@ -127,6 +128,7 @@ exports.acceptFriend = (req, res, next) => {
                         .then(() => {
                             friend.save()
                                 .then(() => {
+                                    req.flash('success', 'Friend request accepted!');
                                     res.redirect('/friends');
                                 })
                         })
@@ -151,6 +153,7 @@ exports.cancelFriend = (req, res, next) => {
                         .then(() => {
                             friend.save()
                                 .then(() => {
+                                    req.flash('success', 'Friend request cancelled!');
                                     res.redirect('/friends');
                                 })
                         })
@@ -189,6 +192,7 @@ exports.declineFriend = (req, res, next) => {
                         .then(() => {
                             friend.save()
                                 .then(() => {
+                                    req.flash('success', 'Friend request declined!');
                                     res.redirect('/friends');
                                 })
                         })
