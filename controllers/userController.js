@@ -41,7 +41,7 @@ exports.login = async (req, res) => {
         .then(user => {
             if (!user) {
                 // Flash Error 
-                req.flash('error', 'Username is Incorect');
+                req.flash('error', 'Username is Incorrect');
                 res.redirect('/user/login');
             } else {
                 user.checkPassword(password)
