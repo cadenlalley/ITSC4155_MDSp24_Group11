@@ -4,6 +4,31 @@
 
 <main class="container text-white">
     <h2>Sweat Rivals Groups Page</h2>
+    <div class="container">
+        <% for(let i = 0; i < groups.length; i++) { %>
+          <% if(i % 4 === 0) { %>
+            <div class="row" id="index-items">
+          <% } %>
+          <div class="item col-6" onclick="location.href='/groups/<%=groups[i].id%>'" style="cursor: pointer;">
+            <img src="/logo.png" alt="" />
+            <!-- if we decide to do images change to group[i].images-->
+            <p class="group-name">
+              <strong>
+                <% let name = groups[i].groupName.toUpperCase();%>
+                  <%if(name.length > 19) {%>
+                   <% name = name.substring(0, 19) + "...";%>
+                  <%}%>
+                <%= name %>
+              </strong>
+            </p>        
+          </div>
+          <% if(i % 4 === 3 || i === groups.length - 1) { %>
+            </div>
+          <% } %>
+        <% } %>
+      </div>
+    <hr>
+    <a href="/groups/new">Create a Group</a>
 </main>
 
 <%- include('../partials/footer.ejs') %> 
