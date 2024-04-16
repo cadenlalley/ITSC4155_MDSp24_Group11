@@ -68,19 +68,27 @@
             </ul>
         </div>
     </nav>
-    <% if(errorMessages.length > 0) {%>
-        <% errorMessages.forEach(message=>{%>
-            <div class="alert alert-danger">
-                <%=message%>
+    <% if (errorMessages.length > 0) { %>
+        <% errorMessages.forEach(message => { %>
+            <div class="w-75 mx-auto mt-5 error-div">
+                <div class="alert alert-danger text-center fw-bold">
+                    <%= message %>
+                    <button type="button" class="btn-close btn-close-black error-close" aria-label="Close"></button>
+                </div>
             </div>
-            <%});%>
-                <%}%>
+            <% }); %>
+    <% } %>
     
-                    <% if(successMessages.length > 0) {%>
-    
-                        <% successMessages.forEach(message=>{%>
-                            <div class="alert alert-success">
-                                <%=message%>
-                            </div>
-                            <%});%>
-                                <%}%>
+    <% if (successMessages.length > 0) { %> 
+        <% successMessages.forEach(message => { %>
+            <div class="w-75 mx-auto success-div">
+                <div class="alert alert-success text-center fw-bold">
+                    <%= message %>
+                    <button type="button" class="btn-close btn-close-black success-close" aria-label="Close"></button>
+                </div>
+            </div>
+        <% }); %>
+    <% } %>
+
+    <script src="/javascript/closer.js"></script>
+
