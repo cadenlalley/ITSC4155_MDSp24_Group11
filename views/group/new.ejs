@@ -18,8 +18,8 @@
         <label for="groupMembers">Group Members:</label>
         <br>
         <% user.friendsList.forEach(function(friend) { %>
-            <input type="checkbox" id="<%= friend._id %>" name="groupMembers" value="<%= friend._id %>">
-            <label for="<%= friend._id %>"><%= friend.targetName %></label>
+            <input type="checkbox" id="<%= friend.target %>" name="groupMembers" value="<%= friend.target %>">
+            <label for="<%= friend.target %>"><%= friend.targetName %></label>
             <br>
         <% }); %>
         <input type="submit" value="Create Group">
