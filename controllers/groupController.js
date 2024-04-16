@@ -26,15 +26,18 @@ exports.createGroupPage = (req, res) => {
 }
 
 exports.createGroup = (req, res) => {
-    const { groupName, groupDescription, groupMembers } = req.body;
+    const { groupName, groupDescription } = req.body;
+    let groupMembers = req.body.groupMembers;
 
     if (!groupName) {
         return res.status(400).send('Group name is required');
     }
-    // groupMembers.push(id);
+    
     console.log('Group Information:', { groupName, groupDescription, groupMembers });
     let id = req.session.user;
+    groupMembers.push(id);
     let group = new groupModel({ groupName, groupDescription, groupMembers });
+   
     console.log('Group:', group);
     group.save()
         .then(() => {
@@ -48,4 +51,24 @@ exports.createGroup = (req, res) => {
             console.error('Error creating group:', err);
             res.status(500).send('Error creating group');
         });
+}
+
+exports.show = (req, res) => {
+    const activePage = 'groups';
+    const id = req.session.user;
+    model.findById(id)
+        .then(user => {
+            groupModel.findById(req.params.id)
+                .then(group => {
+                    console.log('Group:', group); // Log the group
+                    let groupMembers = [];
+                    model.find({ _id: { $in: group.groupMembers } })
+                        .then(members => {
+                            console.log('Members:', members); // Log the members
+                            groupMembers = members;
+                            res.render('./group/show', { user, group, groupMembers, activePage });
+                        })
+                    
+                })
+        })
 }
