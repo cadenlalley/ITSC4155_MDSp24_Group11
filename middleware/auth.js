@@ -1,4 +1,5 @@
 const userModel = require('../models/user');
+const groupModel = require('../models/group');
 
 exports.isGuest = (req, res, next) => {
 	if (req.session.user) {
@@ -56,4 +57,26 @@ exports.friendShipExists = (req, res, next) => {
         .catch(err => {
             next(err);
         });
+};
+
+//checks if user is creator of the group
+exports.isHost = (req, res, next)=>{
+    let id = req.params.id;
+    groupModel.findById(id)
+    .then(group=>{
+        if(group){
+            if(group.groupAdmin == req.session.user){
+                return next();
+            }else{
+                let err = new Error('Unauthorized to access the resource');
+                err.status = 401;
+                return next(err);
+            }
+        }else{
+            let err = new Error('Cannot find a group with id ' + id);
+            err.status = 404;
+            next(err);
+        }
+    })
+    .catch(err=>next(err));
 };
