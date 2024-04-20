@@ -145,3 +145,13 @@ exports.createGoal = (req, res, next)=>{
         next(err);
     });
 }
+
+exports.deleteGoal = (req, res, next)=>{
+    let id = req.params.id;
+    Goal.findByIdAndDelete(id, { useFindAndModify: false })
+    .then(goal=>{
+        req.flash('success', 'You have successfully deleted a Goal');
+        res.redirect('/user/profile');
+    })
+    .catch(err=>next(err));
+}
