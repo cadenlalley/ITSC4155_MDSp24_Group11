@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Goal = require('../models/goal');
 
 exports.showSignup = (req, res) => {
     const activePage = 'signup';
@@ -66,9 +67,10 @@ exports.showProfile = (req, res) => {
     const activePage = 'profile';
 
     let id = req.session.user;
-    User.findById(id)
-        .then(user => {
-            res.render("user/index", { user, activePage });
+    Promise.all([User.findById(id), Goal.find({creator: id})])
+        .then(results => {
+            const[user, goals] = results;
+            res.render("user/index", { user, goals, activePage });
         })
 }
 
@@ -129,4 +131,27 @@ exports.inputForm = (req, res) => {
         next(err);
     });
 
+}
+
+exports.createGoal = (req, res, next)=>{
+    let goal = new Goal(req.body);
+    goal.creator = req.session.user;
+    goal.save() 
+    .then(goal=> {
+        req.flash('success', 'You have created a Goal');
+        res.redirect('/user/profile');
+    })
+    .catch(err=>{
+        next(err);
+    });
+}
+
+exports.deleteGoal = (req, res, next)=>{
+    let id = req.params.id;
+    Goal.findByIdAndDelete(id, { useFindAndModify: false })
+    .then(goal=>{
+        req.flash('success', 'You have deleted a Goal');
+        res.redirect('/user/profile');
+    })
+    .catch(err=>next(err));
 }

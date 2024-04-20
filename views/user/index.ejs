@@ -8,13 +8,47 @@
     <p>First Name: <%= user.firstName %></p>
     <p>Last Name: <%= user.lastName %></p>
     <p>Email: <%= user.email %></p>
+    
+    <h2>My Goals</h2>
+    <%if(goals.length){%>
+        <%goals.forEach(goal =>{%>
+        <table class="">
+            <tr>
+                <td class="">
+                    <p><%=goal.title%></p>
+                </td>
+                <td class="">
+                    <form class="">
+                        <button type = "submit" formmethod="POST" formaction="/user/deleteGoal/<%= goal.id%>/?_method=DELETE" class = "btn btn-danger float-end btn-sm ">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            
+        </table>
+        <%});
+    } else {%>
+        <p>You have not created any events</p>
+    <%}%>
+</br>
+    <form action="/user/createGoal" method="POST">
+        <label for="title" class="form-label">Goal:</label>
+        <input type="text" id="title" name="title" placeholder="Goal" class="form-control-sm" required>
+        <input type="submit" value="Submit" class="btn btn-success">
+    </form>
+</br>
+</br>
+</br>
+
     <a href="/user/form">
         <button class="btn btn-primary">Update Colories/Weight</button>
     </a>
-
+</br>
+</br>
     <a href="/user/logout">
         <button class="btn btn-primary">Logout</button>
     </a>
+</br>
+</br>
     <form>
         <button value="delete" formmethod="POST" formaction="/user/delete/<%= user.id%>/?_method=DELETE" type="submit" class="btn btn-danger">Delete Account</button>
     </form>
