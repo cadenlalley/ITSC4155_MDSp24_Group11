@@ -18,4 +18,4 @@
 * Installation Instructions: 
     * Copy `config.sample.js` into `config.js` and add required fields
     * `npm install` run after cloning repository, to install dependencies
-    * `nodemon app` to run the server
+    * `node app.js` if you are just using node or `nodemon app` if you are using nodemon to run the server
