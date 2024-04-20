@@ -15,11 +15,11 @@
         <table class="">
             <tr>
                 <td class="">
-                    <a href = '/events/<%= goal.id%>'><p><%=goal.title%></p></a>
+                    <p><%=goal.title%></p>
                 </td>
                 <td>
                     <form>
-                        <button type = "submit" formmethod="POST" formaction="/user/<%= deleteGoal.id%>/?_method=DELETE" class = "">Delete</button>
+                        <button type = "submit" formmethod="POST" formaction="/user/deleteGoal/<%= goal.id%>/?_method=DELETE" class = "">Delete</button>
                     </form>
                 </td>
             </tr>

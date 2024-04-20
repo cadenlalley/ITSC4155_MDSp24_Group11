@@ -138,7 +138,7 @@ exports.createGoal = (req, res, next)=>{
     goal.creator = req.session.user;
     goal.save() 
     .then(goal=> {
-        req.flash('success', 'You have successfully created a Goal');
+        req.flash('success', 'You have created a Goal');
         res.redirect('/user/profile');
     })
     .catch(err=>{
@@ -150,7 +150,7 @@ exports.deleteGoal = (req, res, next)=>{
     let id = req.params.id;
     Goal.findByIdAndDelete(id, { useFindAndModify: false })
     .then(goal=>{
-        req.flash('success', 'You have successfully deleted a Goal');
+        req.flash('success', 'You have deleted a Goal');
         res.redirect('/user/profile');
     })
     .catch(err=>next(err));
