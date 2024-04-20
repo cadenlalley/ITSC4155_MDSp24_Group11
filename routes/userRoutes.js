@@ -33,6 +33,10 @@ router.get('/form', isLoggedIn, userController.showForm);
 // POST /user/form : adds to the users calorie and weight info
 router.post('/form', isLoggedIn, userController.inputForm);
 
+// POST /user/createGoal : creates a goal that is connected to the user
 router.post('/createGoal', isLoggedIn, userController.createGoal);
+
+//DELETE /user/delete/:id - delete the goal identified by id
+router.delete('/deleteGoal/:id', isLoggedIn, userController.deleteGoal);
 
 module.exports = router;
