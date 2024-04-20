@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const goalModel = require('../models/goal');
+const Goal = require('../models/goal');
 
 exports.showSignup = (req, res) => {
     const activePage = 'signup';
@@ -67,7 +67,7 @@ exports.showProfile = (req, res) => {
     const activePage = 'profile';
 
     let id = req.session.user;
-    Promise.all([User.findById(id), goalModel.find({creator: id})])
+    Promise.all([User.findById(id), Goal.find({creator: id})])
         .then(results => {
             const[user, goals] = results;
             res.render("user/index", { user, goals, activePage });
@@ -134,17 +134,14 @@ exports.inputForm = (req, res) => {
 }
 
 exports.createGoal = (req, res, next)=>{
-    let goal = new goalModel(req.body);
+    let goal = new Goal(req.body);
     goal.creator = req.session.user;
     goal.save() 
     .then(goal=> {
         req.flash('success', 'You have successfully created a Goal');
-        res.redirect('/profile')
+        res.redirect('/user/profile');
     })
     .catch(err=>{
-        if(err.name === 'ValidationError'){
-            err.status = 400;
-        }
         next(err);
     });
 }
