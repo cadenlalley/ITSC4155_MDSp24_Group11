@@ -33,4 +33,6 @@ router.get('/form', isLoggedIn, userController.showForm);
 // POST /user/form : adds to the users calorie and weight info
 router.post('/form', isLoggedIn, userController.inputForm);
 
+router.post('/createGoal', isLoggedIn, userController.createGoal);
+
 module.exports = router;
