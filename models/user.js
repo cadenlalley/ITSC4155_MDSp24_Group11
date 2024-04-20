@@ -15,7 +15,8 @@ const userSchema = new Schema({
     createdAt: { type: Date, default: Date.now },
     calorieIntake: {type: Number, required: false},
     calorieLoss: {type: Number, required: false},
-    weight: {type: Number, required: false}
+    weight: {type: Number, required: false},
+    points: {type: Number, required: false}
 });
 
 userSchema.pre('save', function(next) {
