@@ -8,6 +8,35 @@
     <p>First Name: <%= user.firstName %></p>
     <p>Last Name: <%= user.lastName %></p>
     <p>Email: <%= user.email %></p>
+    
+    <h2>My Goals</h2>
+    <%if(goals.length){%>
+        <%goals.forEach(goal =>{%>
+        <table class="">
+            <tr>
+                <td class="">
+                    <a href = '/events/<%= goal.id%>'><p><%=goal.title%></p></a>
+                </td>
+                <td>
+                    <form>
+                        <button type = "submit" formmethod="POST" formaction="/user/<%= goal.id%>/?_method=DELETE" class = "">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            
+        </table>
+        <%});
+    } else {%>
+        <p>You have not created any events</p>
+    <%}%>
+
+    <form>
+        <label for="title">Goal:</label>
+        <input type="text" id="title" name="title" placeholder="Goal" required>
+        <input type="submit" value="Submit">
+    </form>
+
+
     <a href="/user/form">
         <button class="btn btn-primary">Update Colories/Weight</button>
     </a>
