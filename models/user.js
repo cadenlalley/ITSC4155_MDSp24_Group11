@@ -19,6 +19,9 @@ const userSchema = new Schema({
     points: {type: Number, required: false}
 });
 
+// TODO: change calorie intake and loss to array of objects to track progress
+// TODO: same with the weight 
+
 userSchema.pre('save', function(next) {
     let user = this;
     if (!user.isModified('password')) {

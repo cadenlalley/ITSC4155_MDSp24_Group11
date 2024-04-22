@@ -69,8 +69,8 @@ app.use('/challenges', challengeRoutes);
 
 
 //set up error responses
-app.use((req, res, next)=>{
-    let err = new Error('The server cannot locate '+ req.url);
+app.use((req, res, next) => {
+    let err = new Error('The server cannot locate ' + req.url);
     err.status = 404;
     //next(err) calls the next error handler
     next(err);
@@ -84,5 +84,5 @@ app.use((err, req, res, next) => {
     }
     let activePage = 'home';
     res.status(err.status);
-    res.render('error', { error: err , activePage});
+    res.render('error', { error: err, activePage });
 });
