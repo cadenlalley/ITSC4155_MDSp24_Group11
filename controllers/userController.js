@@ -4,8 +4,6 @@ const Goal = require('../models/goal');
 const { CalorieIntakeInfo, CalorieLossInfo } = require('../models/calorieInfo');
 const { WeightInfo } = require('../models/weightInfo');
 
-const today = new Date();
-
 exports.showSignup = (req, res) => {
     const activePage = 'signup';
 
@@ -127,12 +125,13 @@ exports.caloriesConsumed = (req, res) => {
 
     User.findById(id)
         .then(user => {
+            let today = new Date();
             if (user.calorieIntakeTracking.length == 0) {
                 user.calorieIntakeTracking.push(trackedCalorieIntake);
                 user.save()
                     .then(() => {
                         req.flash('success', 'The consumed calories have been tracked successfully!');
-                        return res.redirect('/user/tracking');
+                        return res.redirect('/users/tracking');
                     })
             } else {
                 if (
@@ -149,7 +148,7 @@ exports.caloriesConsumed = (req, res) => {
                     user.save()
                         .then(() => {
                             req.flash('success', 'The consumed calories have been tracked successfully!');
-                            return res.redirect('/user/tracking');
+                            return res.redirect('/users/tracking');
                         })
                 }
             }
@@ -166,6 +165,7 @@ exports.caloriesBurned = (req, res) => {
 
     User.findById(id)
         .then(user => {
+            let today = new Date();
             if (user.calorieLossTracking.length == 0) {
                 user.calorieLossTracking.push(trackedCalorieLoss);
                 user.save()
@@ -202,9 +202,11 @@ exports.weight = (req, res, next) => {
     let id = req.session.user;
     let weight = req.body.weight;
     let trackedWeight = new WeightInfo({ value: weight });
-
+    
     User.findById(id)
         .then(user => {
+            const today = new Date();
+            console.log(today);
             if (user.weightTracking.length == 0) {
                 user.weightTracking.push(trackedWeight);
                 user.save()
