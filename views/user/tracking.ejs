@@ -1,0 +1,55 @@
+<%- include('../partials/header.ejs') %>
+
+<title>Sweat Rivals | Tracking</title>
+
+<div class="text-white d-flex mx-5">
+    <div class="row w-50 mx-auto">
+        <div class="w-100 text-center my-4">
+            <h2>Fitness Logging</h2>
+        </div>
+
+        <form action="/user/tracking/calories-consumed" method="POST" class="my-4">
+            <label for="calorieIntake" class="form-label fw-bold">Calories Consumed Today:</label>
+
+            <% if (user.calorieIntakeTracking.length == 0) { %>
+                <input type="number" class="form-control" id="calorieIntake" name="calorieIntake" placeholder="Example: 2000" min="0" max="10000" required />
+            <% } else { %>
+                <input type="number" class="form-control" id="calorieIntake" name="calorieIntake" placeholder="Last Tracked Calorie Intake: <%= user.calorieIntakeTracking[user.calorieIntakeTracking.length - 1].value %>" min="0" max="10000" required />
+            <% } %>
+
+            <input class="btn btn-primary my-2" type="submit" value="Submit" />
+        </form>
+    
+        <form action="/user/tracking/calories-burned" method="POST" class="my-4">
+            <label for="calorieLoss" class="form-label fw-bold">Calories Lost Today:</label>
+            
+            <% if(user.calorieLossTracking.length == 0) { %>
+                <input type="number" class="form-control" id="calorieLoss" name="calorieLoss" placeholder="Example: 350" min="0" max="2000" required />
+            <% } else { %>
+                <input type="number" class="form-control" id="calorieLoss" name="calorieLoss" placeholder="Last Tracked Calories Burned: <%= user.calorieLossTracking[user.calorieLossTracking.length - 1].value %>" min="0" max="2000" required /> 
+            <% } %>
+
+            <input class="btn btn-primary my-2" type="submit" value="Submit" />
+        </form>
+
+        <form action="/user/tracking/weight" method="POST" class="my-4">
+            <label for="weight" class="form-label fw-bold">Weight Today:</label>
+
+            <% if(user.weightTracking.length == 0) { %>
+                <input type="number" class="form-control" id="weight" name="weight" placeholder="Example: 180" min="50" max="1000" required />
+            <% } else { %> 
+                <input type="number" class="form-control" id="weight" name="weight" placeholder="Last Tracked Weight: <%= user.weightTracking[user.weightTracking.length - 1].value %>" min="50" max="1000" required />                
+            <% } %>
+
+            <input class="btn btn-primary my-2" type="submit" value="Submit" />
+        </form>
+    </div>
+
+    <div class="row w-50 mx-auto">
+        <div class="w-100 text-center my-4">
+            <h2>Fitness Tracking</h2>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer.ejs') %>

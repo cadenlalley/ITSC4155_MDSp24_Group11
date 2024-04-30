@@ -3,7 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/userController.js');
 
 const { isGuest, isLoggedIn } = require('../middleware/auth.js');
-const { validateSignUp, validateLogIn, validateResult} = require('../middleware/validator.js');
+const { validateSignUp, validateLogIn, validateResult } = require('../middleware/validator.js');
 
 
 // GET /user/signup : renders signup page
@@ -24,19 +24,25 @@ router.get('/logout', isLoggedIn, userController.logout);
 // GET /user/profile: check profile
 router.get('/profile', isLoggedIn, userController.showProfile);
 
-//DELETE /user/:id - delete the event identified by id
+// DELETE /user/:id - delete the event identified by id
 router.delete('/delete/:id', isLoggedIn, userController.delete);
 
-// GET /user/form : renders form page
-router.get('/form', isLoggedIn, userController.showForm);
+// GET /user/tracking: renders tracking page
+router.get('/tracking', isLoggedIn, userController.showTracking);
 
-// POST /user/form : adds to the users calorie and weight info
-router.post('/form', isLoggedIn, userController.inputForm);
+// POST /user/tracking/calories-consumed: adds todays calories consumed to the calorieInfo collection 
+router.post('/tracking/calories-consumed', isLoggedIn, userController.caloriesConsumed);
+
+// POST /user/tracking/calories-burned: adds todays calories burned to the calorieInfo collection 
+router.post('/tracking/calories-burned', isLoggedIn, userController.caloriesBurned);
+
+// POST /user/tracking/weight: adds todays weight to the weightInfo collection 
+router.post('/tracking/weight', isLoggedIn, userController.weight);
 
 // POST /user/createGoal : creates a goal that is connected to the user
 router.post('/createGoal', isLoggedIn, userController.createGoal);
 
-//DELETE /user/delete/:id - delete the goal identified by id
+// DELETE /user/delete/:id - delete the goal identified by id
 router.delete('/deleteGoal/:id', isLoggedIn, userController.deleteGoal);
 
 module.exports = router;
