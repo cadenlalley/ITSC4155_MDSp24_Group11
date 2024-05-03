@@ -91,7 +91,7 @@ exports.logout = (req, res, next) => {
 exports.delete = (req, res) => {
     let id = req.params.id;
 
-    User.findByIdAndDelete(id, { useFindAndModify: false })
+    Promise.all([Goal.deleteMany({creator: id}), User.findByIdAndDelete(id, { useFindAndModify: false })])
         .then(() => {
             req.session.destroy(err => {
                 if (err) {
