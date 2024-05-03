@@ -45,4 +45,7 @@ router.post('/createGoal', isLoggedIn, userController.createGoal);
 // DELETE /user/delete/:id - delete the goal identified by id
 router.delete('/deleteGoal/:id', isLoggedIn, userController.deleteGoal);
 
+// POST /user/privacy/:id - toggle privacy setting of the user
+router.get('/privacy/:id', isLoggedIn, userController.togglePrivacy);
+
 module.exports = router;

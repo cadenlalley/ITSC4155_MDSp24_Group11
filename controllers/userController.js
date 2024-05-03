@@ -125,13 +125,18 @@ exports.caloriesConsumed = (req, res) => {
 
     User.findById(id)
         .then(user => {
+            if (!user.private) {
+                trackedCalorieIntake.username = user.username;
+            }
+
             let today = new Date();
             if (user.calorieIntakeTracking.length == 0) {
                 user.calorieIntakeTracking.push(trackedCalorieIntake);
                 user.save()
                     .then(() => {
+                        trackedCalorieIntake.save();
                         req.flash('success', 'The consumed calories have been tracked successfully!');
-                        return res.redirect('/users/tracking');
+                        return res.redirect('/user/tracking');
                     })
             } else {
                 if (
@@ -144,11 +149,12 @@ exports.caloriesConsumed = (req, res) => {
                     req.flash('error', 'You have already tracked your calories consumed today. You can track them again tomorrow!');
                     return res.redirect('/user/tracking');
                 } else {
-                    user.calorieIntakeTracking.push[calIntake];
+                    user.calorieIntakeTracking.push(trackedCalorieIntake);
                     user.save()
                         .then(() => {
+                            trackedCalorieIntake.save();
                             req.flash('success', 'The consumed calories have been tracked successfully!');
-                            return res.redirect('/users/tracking');
+                            return res.redirect('/user/tracking');
                         })
                 }
             }
@@ -165,11 +171,16 @@ exports.caloriesBurned = (req, res) => {
 
     User.findById(id)
         .then(user => {
+            if (!user.private) {
+                trackedCalorieLoss.username = user.username;
+            }
+
             let today = new Date();
             if (user.calorieLossTracking.length == 0) {
                 user.calorieLossTracking.push(trackedCalorieLoss);
                 user.save()
                     .then(() => {
+                        trackedCalorieLoss.save();
                         req.flash('success', 'The burned calories have been tracked successfully!');
                         return res.redirect('/user/tracking');
                     })
@@ -187,11 +198,12 @@ exports.caloriesBurned = (req, res) => {
                     user.calorieLossTracking.push(trackedCalorieLoss);
                     user.save()
                         .then(() => {
+                            trackedCalorieLoss.save();
                             req.flash('success', 'The burned calories have been tracked successfully!');
                             return res.redirect('/user/tracking');
                         })
                 }
-            }
+            } 
         })
         .catch(err => {
             next(err);
@@ -202,15 +214,19 @@ exports.weight = (req, res, next) => {
     let id = req.session.user;
     let weight = req.body.weight;
     let trackedWeight = new WeightInfo({ value: weight });
-    
+
     User.findById(id)
         .then(user => {
+            if (!user.private) {
+                trackedWeight.username = user.username;
+            }
+
             const today = new Date();
-            console.log(today);
             if (user.weightTracking.length == 0) {
                 user.weightTracking.push(trackedWeight);
                 user.save()
                     .then(() => {
+                        trackedWeight.save();
                         req.flash('success', 'Weight has been tracked successfully!');
                         return res.redirect('/user/tracking');
                     })
@@ -225,9 +241,11 @@ exports.weight = (req, res, next) => {
                     req.flash('error', 'You have already tracked your weight today. You can track your weight again tomorrow!')
                     return res.redirect('/user/tracking');
                 } else {
+                    trackedWeight.differenceSinceLast = weight - user.weightTracking[user.weightTracking.length - 1].value;
                     user.weightTracking.push(trackedWeight);
                     user.save()
                         .then(() => {
+                            trackedWeight.save();
                             req.flash('success', 'Weight has been tracked successfully!');
                             return res.redirect('/user/tracking');
                         })
@@ -258,6 +276,24 @@ exports.deleteGoal = (req, res, next) => {
         .then(goal => {
             req.flash('success', 'You have deleted a Goal');
             res.redirect('/user/profile');
+        })
+        .catch(err => next(err));
+}
+
+exports.togglePrivacy = (req, res, next) => {
+    let id = req.session.user;
+    User.findById(id)
+        .then(user => {
+            if (user.private == undefined) {
+                user.private = true;
+            } else {
+                user.private = !user.private;
+            }
+            user.save()
+                .then(() => {
+                    req.flash('success', 'Privacy settings have been updated');
+                    res.redirect('/user/profile');
+                })
         })
         .catch(err => next(err));
 }

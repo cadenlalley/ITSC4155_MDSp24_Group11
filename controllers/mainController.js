@@ -1,13 +1,24 @@
 const model = require('../models/user');
+const { CalorieIntakeInfo, CalorieLossInfo } = require('../models/calorieInfo');
+const { WeightInfo } = require('../models/weightInfo');
 
-//renders the index.ejs file
+
 exports.index = (req, res) => {
     let activePage = 'home';
-    //uncomment once user model is added
     let id = req.session.user;
+
     model.findById(id)
-    .then(user=>{
-      res.render("index", {user, activePage});
-    })
+        .then(user => {
+            WeightInfo.find()
+                .then(weightInfo => {
+                    CalorieIntakeInfo.find()
+                        .then(calorieIntakeInfo => {
+                            CalorieLossInfo.find()
+                                .then(calorieLossInfo => {
+                                    res.render("index", { user, activePage, weightInfo, calorieIntakeInfo, calorieLossInfo });
+                                })
+                        })
+                })
+        })
 
 };

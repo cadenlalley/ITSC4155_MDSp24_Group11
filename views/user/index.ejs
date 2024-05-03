@@ -8,6 +8,12 @@
     <p>First Name: <%= user.firstName %></p>
     <p>Last Name: <%= user.lastName %></p>
     <p>Email: <%= user.email %></p>
+    <% let privacy = 'Public'; %>
+    <% if (user.private) { %>
+        <% privacy = 'Private'; %>
+    <% } %>
+    <p>Privacy: <%= privacy %> (click <a href="/user/privacy/<%= user._id %>">here</a> to change privacy - only affects future tracked info)</p>
+
     
     <h2>My Goals</h2>
     <%if(goals.length){%>
@@ -32,7 +38,7 @@
 </br>
     <form action="/user/createGoal" method="POST">
         <label for="title" class="form-label">Goal:</label>
-        <input type="text" id="title" name="title" placeholder="Goal" class="form-control-sm" required>
+        <input class="form-input" type="text" id="title" name="title" placeholder="Goal" class="form-control-sm" required>
         <input type="submit" value="Submit" class="btn btn-success">
     </form>
 </br>

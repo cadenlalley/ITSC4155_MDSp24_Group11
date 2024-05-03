@@ -3,7 +3,80 @@
 <title>Sweat Rivals | Home</title>      
 
 <main class="container text-white">
-    <h2>Sweat Rivals Home Page</h2>
+    <div class="w-100 text-center">
+        <h2>Sweat Rivals Home Page</h2>
+    </div>
+
+    <div class="container mx-auto py-5 text-center">
+
+        <!-- Global Points Leaderboard -->
+        <div class="w-100 text-center">
+            <h3>Points Leaderboard</h3>
+        </div>
+
+        <div class="w-50 mx-auto mb-5">
+            
+        </div>
+
+        <!-- Global Weight Info -->
+        <div class="w-100 text-center">
+            <h3>Weight Updates</h3>
+        </div>
+        
+        <div class="w-50 mx-auto mb-5">
+            <% weightInfo.forEach(trackedWeight => { %> 
+                <% var username = 'anonymous'; %>
+                <% if (trackedWeight.username) { %>
+                    <% username = trackedWeight.username %>
+                <% } %>
+                
+                <% if (trackedWeight.differenceSinceLast != undefined) { %>
+                    <% if (trackedWeight.differenceSinceLast > 0) { %> 
+                        <p><%= username %> gained <%= Math.abs(trackedWeight.differenceSinceLast) %> lbs on <%= trackedWeight.trackedAt.toDateString() %>!</p> 
+                    <% } else { %>
+                        <p><%= username %> lost <%= Math.abs(trackedWeight.differenceSinceLast) %> lbs on <%= trackedWeight.trackedAt.toDateString() %>!</p>
+                    <% } %>
+                <% } %>
+
+            <% }) %>
+        </div>
+
+        <!-- Global Calories Burned Info-->
+        <div class="w-100 text-center">
+            <h3>Calories Burned Updates</h3>
+        </div>
+
+        <div class="w-50 mx-auto mb-5">
+            <% calorieLossInfo.forEach(trackedCalorieLoss => { %> 
+                <% var username = 'anonymous'; %>
+                <% if (trackedCalorieLoss.username) { %>
+                    <% username = trackedCalorieLoss.username %>
+                <% } %>
+
+                <p><%= username %> burned <%= Math.abs(trackedCalorieLoss.value) %> calories on <%= trackedCalorieLoss.trackedAt.toDateString() %>!</p> 
+
+            <% }) %> 
+        </div>
+
+        <!-- Global Calories Consumed Info-->
+        <div class="w-100 text-center">
+            <h3>Calories Consumed Updates</h3>
+        </div>
+
+        <div class="w-50 mx-auto mb-5">
+            <% calorieIntakeInfo.forEach(trackedCalorieIntake => { %> 
+                <% var username = 'anonymous'; %>
+                <% if (trackedCalorieIntake.username) { %>
+                    <% username = trackedCalorieIntake.username %>
+                <% } %>
+
+                <p><%= username %> consumed <%= Math.abs(trackedCalorieIntake.value) %> lbs on <%= trackedCalorieIntake.trackedAt.toDateString() %>!</p>
+
+            <% }) %> 
+        </div>
+
+    </div>
+    
 </main>
 
 <%- include('./partials/footer.ejs') %> 

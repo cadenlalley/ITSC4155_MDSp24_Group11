@@ -12,6 +12,7 @@ const challengeSchema = new Schema({
         enum: ['Calories', 'Weight', 'Exercise'],
     },
     criteria: { type: Number, required: false },
+    egibleBy: { type: Schema.ObjectId, ref: 'User' },
     completedBy: { type: Schema.ObjectId, ref: 'User' },
     startsAt: { type: Date },
     expiresAt: { type: Date },
