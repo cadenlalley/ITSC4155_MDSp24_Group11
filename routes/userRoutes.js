@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController.js');
 
-const { isGuest, isLoggedIn } = require('../middleware/auth.js');
-const { validateSignUp, validateLogIn, validateResult} = require('../middleware/validator.js');
+const { isGuest, isLoggedIn, isCreator } = require('../middleware/auth.js');
+const { validateSignUp, validateLogIn, validateResult, validateGoal} = require('../middleware/validator.js');
 
 
 // GET /user/signup : renders signup page
@@ -34,9 +34,9 @@ router.get('/form', isLoggedIn, userController.showForm);
 router.post('/form', isLoggedIn, userController.inputForm);
 
 // POST /user/createGoal : creates a goal that is connected to the user
-router.post('/createGoal', isLoggedIn, userController.createGoal);
+router.post('/createGoal', isLoggedIn, validateGoal, userController.createGoal);
 
 //DELETE /user/delete/:id - delete the goal identified by id
-router.delete('/deleteGoal/:id', isLoggedIn, userController.deleteGoal);
+router.delete('/deleteGoal/:id', isLoggedIn, isCreator, userController.deleteGoal);
 
 module.exports = router;
