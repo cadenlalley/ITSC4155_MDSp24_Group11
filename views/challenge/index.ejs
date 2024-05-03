@@ -5,6 +5,30 @@
 <main class="container text-white">
     <div class="w-100 mx-auto text-center">
         <h2>Sweat Rivals Challenges</h2>
+        <p class="text-muted pb-2">(Become eligible to complete challenges by tracking your diet, weight, and exercise in your profile every day!)</p>
+
+    </div>
+
+    <div class="w-50 mx-auto pb-5">
+        <% challenges.forEach(challenge => { %>
+            <div class="card my-3 bg-dark">
+                <div class="card-body">
+                    <h5 class="card-title"><%= challenge.name %></h5>
+                    <h6 class="card-subtitle my-2 text-muted"><%= challenge.description %></h6>
+                    <p class="card-subtitle">Start Date: <%= challenge.startsAt.toDateString() %></p>
+                    <p class="card-subtitle">End Date: <%= challenge.expiresAt.toDateString() %></p>
+                    <p class="card-subtitle">Category: <%= challenge.type %></p>
+                    <p class="card-text text-success fw-bold">Points: <%= challenge.points %></p>
+                    <% if (challenge.eligibleBy != undefined) { %>
+                        <% if (challenge.eligibleBy.includes(user._id)) { %>
+                            <form>
+                                <button formmethod="POST" formaction="/challenges/complete/<%= challenge._id %>" action="submit" class="btn btn-success">Complete Challenge</button>
+                            </form>
+                        <% } %>
+                    <% } %>
+                </div>
+            </div>
+        <% }) %>
     </div>
 </main>
 

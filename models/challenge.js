@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 const challengeSchema = new Schema({
     name: { type: String, required: false },
     description: { type: String, required: false },
@@ -9,15 +8,15 @@ const challengeSchema = new Schema({
     points: { type: Number, required: false },
     type: {
         type: String,
-        enum: ['Calories', 'Weight', 'Exercise'],
+        enum: ['Diet', 'Weight', 'Exercise'],
     },
     criteria: { type: Number, required: false },
-    egibleBy: { type: Schema.ObjectId, ref: 'User' },
-    completedBy: { type: Schema.ObjectId, ref: 'User' },
-    startsAt: { type: Date },
-    expiresAt: { type: Date },
+    eligibleBy: [Schema.ObjectId],
+    completedBy: [Schema.ObjectId],
+    startsAt: { type: Date, default: new Date(2024, 4, 4) },
+    expiresAt: { type: Date, default: new Date(2024, 4, 13) }
 });
 
 const Challenge = mongoose.model("Challenge", challengeSchema);
 
-module.exports = Challenge;
+module.exports = { Challenge }

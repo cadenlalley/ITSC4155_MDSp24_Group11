@@ -27,7 +27,6 @@ exports.showLogin = (req, res) => {
 exports.signup = async (req, res) => {
     const { username, email, firstName, lastName, password } = req.body;
     const user = new User({ username, firstName, lastName, email, password, undefined });
-    console.log(user);
 
     try {
         await user.save();
