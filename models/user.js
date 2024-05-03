@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
+
 const { friendSchema } = require("./friend");
+const { weightInfoSchema } = require("./weightInfo");
+const { calorieLossInfoSchema, calorieIntakeInfoSchema } = require("./calorieInfo");
+
 
 const Schema = mongoose.Schema;
 
@@ -9,14 +13,17 @@ const userSchema = new Schema({
     firstName: { type: String, required: [true, 'first name is required'] },
     lastName: { type: String, required: [true, 'last name is required'] },
     email: { type: String, required: [true, 'email is required'], unique: [true, 'this email address has been used'] },
-    password: { type: String, required: [true, 'password is required']},
+    password: { type: String, required: [true, 'password is required'] },
+    private: { type: Boolean, default: false },
     friendsList: [friendSchema],
     groups: [{ type: Schema.ObjectId }],
+    weightTracking: [weightInfoSchema],
+    calorieIntakeTracking: [calorieIntakeInfoSchema],
+    calorieLossTracking: [calorieLossInfoSchema],
+    completedChallenges: [{ type: Schema.ObjectId }],
+    challengeCompletionDates: [{ type: Date }],
     createdAt: { type: Date, default: Date.now },
-    calorieIntake: {type: Number, required: false},
-    calorieLoss: {type: Number, required: false},
-    weight: {type: Number, required: false},
-    points: {type: Number, required: false}
+    lifetimePoints: { type: Number, default: 0 },
 });
 
 userSchema.pre('save', function(next) {

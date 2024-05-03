@@ -1,0 +1,127 @@
+<%- include('../partials/header.ejs') %>
+
+<title>Sweat Rivals | Tracking</title>
+
+<div class="text-white d-flex mx-5">
+    <div class="row w-50 mx-auto">
+        <div class="w-75 mx-auto text-center my-4">
+            <h2>Fitness Logging</h2>
+            <form action="/user/tracking/weight" method="POST" class="my-4">
+                <h4>Weight Today:</h4>
+
+                <% if(user.weightTracking.length == 0) { %>
+                    <input type="number" class="form-control" id="weight" name="weight" placeholder="Example: 180" min="50" max="1000" required />
+                <% } else { %> 
+                    <input type="number" class="form-control" id="weight" name="weight" placeholder="Last Tracked Weight: <%= user.weightTracking[user.weightTracking.length - 1].value %>" min="50" max="1000" required />                
+                <% } %>
+
+                <div class="w-100 text-start">
+                    <input class="btn btn-primary my-2" type="submit" value="Submit" />
+                </div>
+            </form>
+
+            <form action="/user/tracking/calories-burned" method="POST" class="my-4">
+                <h4>Calories Burned Today:</h4>
+
+                <% if(user.calorieLossTracking.length == 0) { %>
+                    <input type="number" class="form-control" id="calorieLoss" name="calorieLoss" placeholder="Example: 350" min="0" max="2000" required />
+                <% } else { %>
+                    <input type="number" class="form-control" id="calorieLoss" name="calorieLoss" placeholder="Last Tracked Calories Burned: <%= user.calorieLossTracking[user.calorieLossTracking.length - 1].value %>" min="0" max="2000" required /> 
+                <% } %>
+                
+                <div class="w-100 text-start">
+                    <input class="btn btn-primary my-2" type="submit" value="Submit" />
+                </div>
+            </form>
+
+            <form action="/user/tracking/calories-consumed" method="POST" class="my-4">
+                <h4>Calories Consumed Today:</h4>
+
+                <% if (user.calorieIntakeTracking.length == 0) { %>
+                    <input type="number" class="form-control" id="calorieIntake" name="calorieIntake" placeholder="Example: 2000" min="0" max="10000" required />
+                <% } else { %>
+                    <input type="number" class="form-control" id="calorieIntake" name="calorieIntake" placeholder="Last Tracked Calorie Intake: <%= user.calorieIntakeTracking[user.calorieIntakeTracking.length - 1].value %>" min="0" max="10000" required />
+                <% } %>
+
+                <div class="w-100 text-start">
+                    <input class="btn btn-primary my-2" type="submit" value="Submit" />
+                </div>
+            </form>
+        </div> 
+    </div>
+
+    <div class="row w-50 mx-auto">
+        <div class="w-75 h-50 mx-auto text-center my-4 overflow-y-scroll">
+            <h2>Fitness Tracking</h2>
+            
+            <div class="w-75 mx-auto">
+                <h4 class="py-2">Weight</h4>
+                <table class="table text-white">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Weight</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% user.weightTracking.forEach(weight => { %> 
+                            <tr>
+                                <th scope="row"><%= weight.trackedAt.toDateString() %></th>
+                                <td><%= weight.value %> lbs</td>
+                            </tr>
+                        <% }) %>
+
+                    </tbody>
+                </table> 
+            </div>
+
+            <div class="w-75 mx-auto">
+                <h4 class="py-2">Calories Burned</h4>
+                <table class="table text-white">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Calories Burned</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% user.calorieLossTracking.forEach(caloriesLost => { %>
+                            <tr>
+                                <th scope="row"><%= caloriesLost.trackedAt.toDateString() %></th>
+                                <td><%= caloriesLost.value %> kcal</td>
+                            </tr>
+                        <% }) %>
+
+                    </tbody>
+                </table> 
+            </div>
+
+            <div class="w-75 mx-auto">
+                <h4 class="py-2">Calories Consumed</h4>
+                <table class="table text-white">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Calorie Intake (lbs)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    <% user.calorieIntakeTracking.forEach(calorieIntake => { %>
+                        <tr>
+                            <th scope="row"><%= calorieIntake.trackedAt.toDateString() %></th>
+                            <td><%= calorieIntake.value %> kcal</td>
+                        </tr>
+                    <% }) %>
+
+                    </tbody>
+                </table> 
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer.ejs') %>
