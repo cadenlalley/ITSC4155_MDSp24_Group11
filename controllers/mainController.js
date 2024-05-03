@@ -15,10 +15,12 @@ exports.index = (req, res) => {
                         .then(calorieIntakeInfo => {
                             CalorieLossInfo.find()
                                 .then(calorieLossInfo => {
-                                    res.render("index", { user, activePage, weightInfo, calorieIntakeInfo, calorieLossInfo });
+                                    model.find().sort({ lifetimePoints: -1 }).limit(10)
+                                        .then(leaderboard => {
+                                            res.render("index", { user, activePage, weightInfo, calorieIntakeInfo, calorieLossInfo, leaderboard });
+                                        })
                                 })
                         })
                 })
         })
-
 };

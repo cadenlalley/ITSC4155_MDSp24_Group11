@@ -22,7 +22,7 @@ const userSchema = new Schema({
     calorieLossTracking: [calorieLossInfoSchema],
     completedChallenges: [{ type: Schema.ObjectId }],
     createdAt: { type: Date, default: Date.now },
-    lifetimePoints: { type: Number, required: false },
+    lifetimePoints: { type: Number, default: 0 },
 });
 
 // TODO: change calorie intake and loss to array of objects to track progress

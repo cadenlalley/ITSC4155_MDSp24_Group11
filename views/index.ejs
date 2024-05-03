@@ -3,15 +3,18 @@
 <title>Sweat Rivals | Home</title>      
 
 <main class="container text-white">
-    <div class="w-100 text-center">
-        <h2>Sweat Rivals Home Page</h2>
-    </div>
-
     <div class="container mx-auto py-5 text-center">
 
         <!-- Global Points Leaderboard -->
-        <div class="w-100 text-center">
-            <h3>Points Leaderboard</h3>
+        <div class="w-100 h-50 text-center">
+            <h1>Points Leaderboard</h1>
+            <div class="w-50 mx-auto">
+                <ol class="list-group list-group-flush">
+                    <% leaderboard.forEach(value => { %>
+                        <li class="list-group-item bg-dark text-white"><%= value.username %>: <%= value.lifetimePoints %> points</li>
+                    <% }) %>
+                </ol>
+            </div>
         </div>
 
         <div class="w-50 mx-auto mb-5">
@@ -70,7 +73,7 @@
                     <% username = trackedCalorieIntake.username %>
                 <% } %>
 
-                <p><%= username %> consumed <%= Math.abs(trackedCalorieIntake.value) %> lbs on <%= trackedCalorieIntake.trackedAt.toDateString() %>!</p>
+                <p><%= username %> consumed <%= Math.abs(trackedCalorieIntake.value) %> calories on <%= trackedCalorieIntake.trackedAt.toDateString() %>!</p>
 
             <% }) %> 
         </div>
