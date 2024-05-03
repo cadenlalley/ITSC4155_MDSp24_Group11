@@ -2,9 +2,8 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController.js');
 
-const { isGuest, isLoggedIn } = require('../middleware/auth.js');
-const { validateSignUp, validateLogIn, validateResult } = require('../middleware/validator.js');
-
+const { isGuest, isLoggedIn, isCreator } = require('../middleware/auth.js');
+const { validateSignUp, validateLogIn, validateResult, validateGoal} = require('../middleware/validator.js');
 
 // GET /user/signup : renders signup page
 router.get('/signup', isGuest, userController.showSignup);
@@ -40,10 +39,10 @@ router.post('/tracking/calories-burned', isLoggedIn, userController.caloriesBurn
 router.post('/tracking/weight', isLoggedIn, userController.weight);
 
 // POST /user/createGoal : creates a goal that is connected to the user
-router.post('/createGoal', isLoggedIn, userController.createGoal);
+router.post('/createGoal', isLoggedIn, validateGoal, userController.createGoal);
 
-// DELETE /user/delete/:id - delete the goal identified by id
-router.delete('/deleteGoal/:id', isLoggedIn, userController.deleteGoal);
+//DELETE /user/delete/:id - delete the goal identified by id
+router.delete('/deleteGoal/:id', isLoggedIn, isCreator, userController.deleteGoal);
 
 // POST /user/privacy/:id - toggle privacy setting of the user
 router.get('/privacy/:id', isLoggedIn, userController.togglePrivacy);

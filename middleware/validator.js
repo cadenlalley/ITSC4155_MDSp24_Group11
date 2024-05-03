@@ -40,3 +40,8 @@ exports.validateResult = (req, res, next) => {
         return next();
     }
 }
+
+exports.validateGoal = [
+    body('title', 'Goal title cannot be empty').notEmpty().trim().escape(),
+    body('creator', 'Creator cannot be empty').trim().escape()
+];
