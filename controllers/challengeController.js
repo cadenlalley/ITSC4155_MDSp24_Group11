@@ -11,16 +11,22 @@ exports.index = (req, res, next) => {
                 .then(challenges => {
                     challenges.forEach(challenge => {
                         if (challenge.type == "Weight") {
-                            if (user.weightTracking[user.weightTracking.length - 1].value <= challenge.criteria) {
-                                challenge.eligibleBy.push(user._id);
+                            if (user.weightTracking.length != 0) {
+                                if (user.weightTracking[user.weightTracking.length - 1].value <= challenge.criteria) {
+                                    challenge.eligibleBy.push(user._id);
+                                }
                             }
                         } else if (challenge.type == "Diet") {
-                            if (user.calorieIntakeTracking[user.calorieIntakeTracking.length - 1].value <= challenge.criteria) {
-                                challenge.eligibleBy.push(user._id);
+                            if (user.calorieIntakeTracking.length != 0) {
+                                if (user.calorieIntakeTracking[user.calorieIntakeTracking.length - 1].value <= challenge.criteria) {
+                                    challenge.eligibleBy.push(user._id);
+                                }
                             }
                         } else {
-                            if (user.calorieLossTracking[user.calorieLossTracking.length - 1].value >= challenge.criteria) {
-                                challenge.eligibleBy.push(user._id);
+                            if (user.calorieLossTracking.length != 0) {
+                                if (user.calorieLossTracking[user.calorieLossTracking.length - 1].value >= challenge.criteria) {
+                                    challenge.eligibleBy.push(user._id);
+                                }
                             }
                         }
                     })
@@ -38,11 +44,20 @@ exports.complete = (req, res, next) => {
         .then(user => {
             Challenge.findById(challengeId)
                 .then(challenge => {
-                    user.completedChallenges.push(challenge._id);
-                    challenge.completedBy.push(user._id);
-                    user.lifetimePoints += challenge.points;
-                    user.challengeCompletionDates.push(new Date());
-                    if (user.challengeCompletionDates.length > 0) {
+                    if (user.completedChallenges.length == 0) {
+                        user.completedChallenges.push(challenge._id);
+                        challenge.completedBy.push(user._id);
+                        user.lifetimePoints += challenge.points;
+                        user.challengeCompletionDates.push(new Date());
+                        user.save()
+                            .then(() => {
+                                challenge.save()
+                                    .then(() => {
+                                        req.flash('success', 'Challenge completed!');
+                                        return res.redirect('/challenges');
+                                    })
+                            })
+                    } else {
                         if (
                             user.challengeCompletionDates[user.challengeCompletionDates.length - 1].getMonth() == new Date().getMonth()
                             &&
@@ -52,17 +67,23 @@ exports.complete = (req, res, next) => {
                         ) {
                             req.flash('error', 'You have already completed a challenge today, come back tomorrow!');
                             return res.redirect('/challenges');
+                        } else {
+                            user.completedChallenges.push(challenge._id);
+                            challenge.completedBy.push(user._id);
+                            user.lifetimePoints += challenge.points;
+                            user.challengeCompletionDates.push(new Date());
+                            user.save()
+                                .then(() => {
+                                    challenge.save()
+                                        .then(() => {
+                                            req.flash('success', 'Challenge completed!');
+                                            return res.redirect('/challenges');
+                                        })
+                                })
                         }
                     }
-                    user.save()
-                        .then(() => {
-                            challenge.save()
-                                .then(() => {
-                                    req.flash('success', 'Challenge completed!');
-                                    return res.redirect('/challenges');
-                                })
-                        })
                 })
+                .catch(err => next(err));
         });
 
 }
