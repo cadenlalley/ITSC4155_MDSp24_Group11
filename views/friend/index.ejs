@@ -21,7 +21,7 @@
                     <tr class="text-center">
                         <th scope="col">Username</th>
                         <th scope="col">Status</th>
-                        <th scope="col">Lifetime Points</th>
+                        <th scope="col"></th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -30,13 +30,13 @@
                         <tr class="text-center fs-4">
                             <th scope="row"><%= friend.origin.equals(user._id) ? friend.targetName : friend.originName %></th>
                             <td><%= friend.status %></td>
-                            <td>0 Points</td>
+                            <td></td>
                             <% if (friend.status === 'Friends') { %>
                                 <td>
                                     <a 
                                         href="/friends/view/<%= friend.origin.equals(user._id) ? friend.target : friend.origin %>"
                                         class="btn btn-primary">
-                                        View Proile
+                                        View Profile 
                                     </a>
                                 </td>
                             <% } else if (friend.status === 'Rejected') { %>
