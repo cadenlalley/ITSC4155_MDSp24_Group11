@@ -1,0 +1,50 @@
+<%- include('../partials/header.ejs') %>
+
+<title>Sweat Rivals | Groups</title>      
+
+<main class="container text-white">
+    <h2>Edit <%=group.groupName%></h2>
+</main>
+
+<div class="container text-white">
+    <form method = "POST" action = "/groups/<%= group.id%>?_method=PUT">
+        <div class="form-group">
+            <label for="groupName">Group Name</label>
+            <input type="text" class="form-control" id="groupName" name="groupName" value="<%= group.groupName%>">
+            <label for="groupMembers">Group Members</label>
+            <table class="table">
+            <thead>
+                <tr>
+                <th>Username</th>
+                <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let member of groupMembers) { %>
+                <tr>
+                    <td class="text-white"><%= member.username %></td>
+                    <td>
+                        <% if (member.id != group.groupAdmin) { %>
+                        <form method = "POST" action = "/groups/<%=member.id%>/removeFromGroup">
+                            <input type="hidden" name="groupId" value="<%= group.id %>">
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                        <% } %>
+
+                    
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+            </table>
+            <label for="groupDescription">Group Description</label>
+            <input type="text" class="form-control" id="groupDescription" name="groupDescription" value="<%= group.groupDescription%>">
+        
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+    </form>
+</div>
+
+
+<%- include('../partials/footer.ejs') %> 

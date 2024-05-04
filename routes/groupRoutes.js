@@ -14,4 +14,12 @@ router.get('/', isLoggedIn, groupController.index);
 
 router.get('/:id', isLoggedIn, groupController.show);
 
+router.get('/:id/edit', isLoggedIn, isHost, groupController.edit);
+
+router.put('/:id', isLoggedIn, isHost, groupController.update);
+
+router.delete('/:id', isLoggedIn, isHost, groupController.delete);
+
+router.post('/:id/removeFromGroup', groupController.removeFromGroup);
+
 module.exports = router;
