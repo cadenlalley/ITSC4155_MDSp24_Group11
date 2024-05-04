@@ -2,11 +2,26 @@
 <title>Sweat Rivals | Friends</title>      
 
 <main class="container text-white">
-    <!--TODO: Figure out what to display here-->
-    <h2><%= friend.username %></h2>
-    <h2><%= friend.email %></h2>
-    <h2><%= friend.age %> Years Old</h2>
- 
+    <div class="w-100 mx-auto text-center pb-5">
+        <h1><%= friend.username %>'s Profile</h1>
+    </div>
+
+    <div class="w-50 mx-auto">
+        <a href="/friends">
+            <button class="btn btn-primary">< Back</button>
+        </a>
+        <h4 class="my-4">Email: <%= friend.email %></h4>
+        <h4 class="mb-4">Lifetime Points: <%= friend.lifetimePoints %></h4>
+
+        <h4> Challenges Completed: </h4>
+        <ul>
+            <% challenges.forEach(challenge => { %>
+                <li><%= challenge.name %></li>
+            <% }) %>
+        </ul>
+        <!-- Didn't have time to implement remove friend function --> 
+        <!-- <button class="btn btn-danger my-2" type="submit">Remove Friend</button> -->
+    </div>
 </main>
 
 <%- include('../partials/footer.ejs') %> 

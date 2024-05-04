@@ -1,5 +1,6 @@
 const userModel = require('../models/user');
 const { Friend } = require('../models/friend');
+const { Challenge } = require('../models/challenge');
 
 const activePage = 'friends';
 
@@ -23,7 +24,10 @@ exports.showFriend = (req, res) => {
         .then(user => {
             userModel.findById(friendId)
                 .then(friend => {
-                    res.render('friend/show', { user, friend, activePage });
+                    Challenge.find({ completedBy: { $in: [friend._id] } })
+                        .then(challenges => {
+                            res.render('friend/show', { user, friend, challenges, activePage });
+                        })
                 })
         })
         .catch(err => {
