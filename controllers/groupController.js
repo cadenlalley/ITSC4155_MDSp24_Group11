@@ -65,7 +65,7 @@ exports.show = (req, res) => {
                 .then(group => {
                     console.log('Group:', group); // Log the group
                     let groupMembers = [];
-                    model.find({ _id: { $in: group.groupMembers } })
+                    model.find({ _id: { $in: group.groupMembers } }).sort({lifetimePoints: -1})
                         .then(members => {
                             console.log('Members:', members); // Log the members
                             groupMembers = members;
