@@ -20,7 +20,6 @@
                         <li><%= member.username %>: <%= member.lifetimePoints %></li>
                     <% }); %>
                 </ul>
-                <p>Group Admin: <%= group.groupAdmin %></p>
 
                 <% if (user.id == group.groupAdmin) { %>
                     <a href="/groups/<%= group._id %>/edit" class="btn btn-primary">Edit Group</a>
