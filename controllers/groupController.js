@@ -27,28 +27,30 @@ exports.createGroupPage = (req, res) => {
 
 exports.createGroup = (req, res) => {
     const { groupName, groupDescription } = req.body;
-    let groupMembers = [];
-
-    groupMembers = req.body.groupMembers;
+    let groupMembers = req.body.groupMembers || [];
 
     if (!groupName) {
         return res.status(400).send('Group name is required');
     }
-    
-    console.log('Group Information:', { groupName, groupDescription, groupMembers });
+
     let id = req.session.user;
     groupMembers.push(id);
-    groupAdmin = req.session.user;
+    let groupAdmin = req.session.user;
     let group = new groupModel({ groupName, groupDescription, groupMembers, groupAdmin });
-   
-    console.log('Group:', group);
+
     group.save()
+        .then((group) => {
+            // Find each group member and add the groupId to their groups array
+            return Promise.all(groupMembers.map(memberId => {
+                return model.findById(memberId)
+                    .then(user => {
+                        user.groups.push(group._id);
+                        return user.save();
+                    });
+            }));
+        })
         .then(() => {
-            model.findById(id).then(user => {
-                user.groups.push(group._id);
-                user.save();
-                res.redirect('/groups/');
-            })
+            res.redirect('/groups/');
         })
         .catch(err => {
             console.error('Error creating group:', err);
@@ -159,7 +161,7 @@ exports.removeFromGroup = (req, res) => {
     groupModel.findById(groupId)
         .then(group => {
             // Remove the user from the group's groupMembers array
-            group.groupMembers = group.groupMembers.filter(id => id != userId);
+            group.groupMembers = group.groupMembers.filter(id => id.toString() !== userId);
             console.log(group.groupMembers);
             return group.save(); // Save the group
             
@@ -170,7 +172,7 @@ exports.removeFromGroup = (req, res) => {
         })
         .then(user => {
             // Remove the group from the user's groups array
-            user.groups = user.groups.filter(id => id != groupId);
+            user.groups = user.groups.filter(id => id.toString() !== groupId);
             return user.save(); // Save the user
         })
         .then(() => {
