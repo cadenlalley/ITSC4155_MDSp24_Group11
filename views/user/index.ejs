@@ -2,7 +2,7 @@
 
 <title>Sweat Rivals | My Profile</title>      
 
-<main class="container text-white">
+<main class="container text-white w-50 mx-auto">
     <h2>Welcome, <%= user.firstName %>!</h2>
     <p>Username: <%= user.username %></p>
     <p>First Name: <%= user.firstName %></p>
@@ -25,7 +25,7 @@
                 </td>
                 <td class="">
                     <form class="">
-                        <button type = "submit" formmethod="POST" formaction="/user/deleteGoal/<%= goal.id%>/?_method=DELETE" class = "btn btn-danger float-end btn-sm ">Delete</button>
+                        <button type = "submit" formmethod="POST" formaction="/user/deleteGoal/<%= goal.id%>/?_method=DELETE" class="btn btn-danger float-end btn-sm ">Delete</button>
                     </form>
                 </td>
             </tr>

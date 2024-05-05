@@ -3,8 +3,12 @@
 <title>Sweat Rivals | Group View</title>      
 
 <main class="container text-white">
-    <h2>Sweat Rivals Group Page</h2>
-    <div class="container">
+
+    <div class="w-100 mx-auto text-center">
+        <h2>Sweat Rivals Group Page</h2>
+    </div>
+
+    <div class="container w-50 mx-auto mt-5">
         <img src="/logo.png" alt="" />
               <p><strong>
                 <%= group.groupName.toUpperCase() %>
@@ -13,7 +17,7 @@
                 <p>Members:</p>
                 <ul>
                     <% groupMembers.forEach(function(member) { %>
-                        <li><%= member.username %></li>
+                        <li><%= member.username %>: <%= member.lifetimePoints %></li>
                     <% }); %>
                 </ul>
                 <p>Group Admin: <%= group.groupAdmin %></p>

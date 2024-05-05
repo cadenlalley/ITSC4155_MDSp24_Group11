@@ -3,34 +3,36 @@
 <title>Sweat Rivals | Groups</title>      
 
 <main class="container text-white">
-    <h2>Create a New Group</h2>
+    <div class="w-100 mx-auto text-center">
+        <h2>Create a New Group</h2>
+    </div>
 </main>
 
-<div class="container text-white">
+<div class="container text-white w-25 mx-auto pt-5">
     <form action="/groups/create" method="POST">
         <label for="groupName">Group name:</label>
-        <input type="text" id="groupName" name="groupName" required>
+        <input class="form-control" type="text" id="groupName" name="groupName" required>
         <br>
         <label for="groupDescription">Group description:</label>
         <br>
-        <textarea type="text" id="groupDescription" name="groupDescription"></textarea>
+        <textarea class="form-control" type="text" id="groupDescription" name="groupDescription"></textarea>
         <br>
-        <label for="groupMembers">Group Members:</label>
+        <label for="groupMembers" class="form-label">Group Members:</label>
         <br>
         <% user.friendsList.forEach(function(friend) { %>
             <% if (friend.isFriend) { %>
                 <% if (friend.origin.equals(user._id)) { %>
-                    <input type="checkbox" id="<%= friend.target %>" name="groupMembers" value="<%= friend.target %>">
+                    <input class="form-check-input" type="checkbox" id="<%= friend.target %>" name="groupMembers" value="<%= friend.target %>">
                     <label for="<%= friend.target %>"><%= friend.targetName %></label>
                     <br>
                 <% } else { %>
-                    <input type="checkbox" id="<%= friend.origin %>" name="groupMembers" value="<%= friend.origin %>">
+                    <input class="form-check-input" type="checkbox" id="<%= friend.origin %>" name="groupMembers" value="<%= friend.origin %>">
                     <label for="<%= friend.origin %>"><%= friend.originName %></label>
                     <br>
                 <% } %>
             <% } %>
         <% }); %>
-        <input type="submit" value="Create Group">
+        <input class="btn btn-primary mt-4" type="submit" value="Create Group">
       </form>
 </div>
 

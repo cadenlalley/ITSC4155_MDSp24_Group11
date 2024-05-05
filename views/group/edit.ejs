@@ -3,15 +3,17 @@
 <title>Sweat Rivals | Groups</title>      
 
 <main class="container text-white">
-    <h2>Edit <%=group.groupName%></h2>
+    <div class="w-100 mx-auto text-center">
+        <h2>Edit <%=group.groupName%></h2>
+    </div>
 </main>
 
-<div class="container text-white">
+<div class="container text-white w-25 mx-auto pt-5">
     <form method = "POST" action = "/groups/<%= group.id%>?_method=PUT">
         <div class="form-group">
-            <label for="groupName">Group Name</label>
+            <label class="form-label mt-2" for="groupName">Group Name</label>
             <input type="text" class="form-control" id="groupName" name="groupName" value="<%= group.groupName%>">
-            <label for="groupMembers">Group Members</label>
+            <label class="form-label mt-2" for="groupMembers">Group Members</label>
             <table class="table">
             <thead>
                 <tr>
@@ -41,7 +43,7 @@
             <input type="text" class="form-control" id="groupDescription" name="groupDescription" value="<%= group.groupDescription%>">
         
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary mt-4">Submit</button>
     </div>
     </form>
 </div>
