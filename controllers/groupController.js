@@ -98,28 +98,28 @@ exports.edit = (req, res) => {
 
 exports.update = (req, res) => {
     const { groupName, groupDescription } = req.body;
+    const groupId = req.params.id; // The ID of the group to update
+
     if (!groupName) {
         return res.status(400).send('Group name is required');
     }
-    
-    console.log('Group Information:', { groupName, groupDescription,  });
-    let id = req.session.user;
-    
-    groupAdmin = req.session.user;
-    let group = new groupModel({ groupName, groupDescription, groupAdmin });
-   
-    console.log('Group:', group);
-    group.save()
+
+    // Find the group
+    groupModel.findById(groupId)
+        .then(group => {
+            // Update the group's properties
+            group.groupName = groupName;
+            group.groupDescription = groupDescription;
+
+            // Save the group
+            return group.save();
+        })
         .then(() => {
-            model.findById(id).then(user => {
-                user.groups.push(group._id);
-                user.save();
-                res.redirect('/groups/');
-            })
+            res.redirect('/groups/' + groupId); // Redirect back to the group page
         })
         .catch(err => {
-            console.error('Error creating group:', err);
-            res.status(500).send('Error creating group');
+            console.error('Error updating group:', err);
+            res.status(500).send('Error updating group');
         });
 }
 
@@ -160,7 +160,9 @@ exports.removeFromGroup = (req, res) => {
         .then(group => {
             // Remove the user from the group's groupMembers array
             group.groupMembers = group.groupMembers.filter(id => id != userId);
+            console.log(group.groupMembers);
             return group.save(); // Save the group
+            
         })
         .then(() => {
             // Find the user
@@ -172,7 +174,7 @@ exports.removeFromGroup = (req, res) => {
             return user.save(); // Save the user
         })
         .then(() => {
-            res.redirect('/groups/' + groupId); // Redirect back to the group page
+            res.redirect('/groups/' + groupId+ '/edit'); // Redirect back to the group page
         })
         .catch(err => {
             console.error('Error removing user from group:', err);
