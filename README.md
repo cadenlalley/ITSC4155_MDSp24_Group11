@@ -27,7 +27,7 @@
     * If using Studio Visual Code or another IDE connected to GitHub
        * Open the Source Control tab and enter `https://github.com/cadenlalley/ITSC4155_MDSp24_Group11.git` (Clone the repo)
     * Once the repository is cloned
-       * Copy `config.sample.js` into `config.js` and add provided connection string (or add username and password provided in the `<user>` and `<pass>` fields in the connection URI.
+       * Copy `config.sample.js` into `config.js` and add provided connection string (or add username and password provided in the `<user>` and `<pass>` fields in the connection URI)
        * Type `npm install` in terminal, to install dependencies
        * Then type `node app` if you are just using node or `nodemon app` if you are using nodemon to run the server
        * In a browsing window enter `http://localhost:3000`
