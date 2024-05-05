@@ -16,16 +16,18 @@
       
 * Prerequisite Installation Instructions:
    * [nodejs](https://nodejs.org/en/download) 
-   * [nodemon](https://www.npmjs.com/package/nodemon)
+   * [nodemon](https://www.npmjs.com/package/nodemon) (Not Required)
 
-* Installation Instructions: 
-    * If using Git Bash or something similar
-       * cd to the folder you want to save the cloned repository in
+* Installation Instructions:
+    * **Ensure you have installed prerequsites!**
+    * If using terminal (GitBash, Bash, zsh, etc.)
+       * `cd` to the folder you want to save the cloned repository in
        * Clone the repository onto your computer by running `git clone https://github.com/cadenlalley/ITSC4155_MDSp24_Group11.git`
-    * If using Studio Visual Code or another coding software that is connected with GitHub
-       * Open the Source Control tab and enter `https://github.com/cadenlalley/ITSC4155_MDSp24_Group11.git`
+       * `cd` into newly created directory
+    * If using Studio Visual Code or another IDE connected to GitHub
+       * Open the Source Control tab and enter `https://github.com/cadenlalley/ITSC4155_MDSp24_Group11.git` (Clone the repo)
     * Once the repository is cloned
-       * Copy `config.sample.js` into `config.js` and add required fields
-       * Type `npm install` in Git Bash or terminal if using VSCode, to install dependencies
+       * Copy `config.sample.js` into `config.js` and add provided connection string (or add username and password provided in the `<user>` and `<pass>` fields in the connection URI.
+       * Type `npm install` in terminal, to install dependencies
        * Then type `node app` if you are just using node or `nodemon app` if you are using nodemon to run the server
        * In a browsing window enter `http://localhost:3000`
